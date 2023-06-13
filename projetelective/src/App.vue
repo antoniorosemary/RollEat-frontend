@@ -76,7 +76,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding:32px;
+ /* padding:32px;*/
 }
 
 img {

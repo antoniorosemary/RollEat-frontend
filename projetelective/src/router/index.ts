@@ -1,11 +1,15 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import Vue from 'vue'
+import VueRouter, { RouteConfig } from 'vue-router'
+
 import HomeView from '../views/HomeView.vue'
 import Login from '../components/Login.vue'
 import Client from '../components/Client.vue'
 import Restaurant from '../components/Restaurant.vue'
 import Register from '../components/Register.vue'
 
-const routes: Array<RouteRecordRaw> = [
+Vue.use(VueRouter)
+
+const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'home',
@@ -58,8 +62,9 @@ const routes: Array<RouteRecordRaw> = [
   // }
 ]
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
   routes
 })
 

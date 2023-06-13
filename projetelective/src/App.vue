@@ -49,6 +49,7 @@ export default {
 </script>
 
 <style>
+@import url('./colors.css');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;800&display=swap');
 
 * {

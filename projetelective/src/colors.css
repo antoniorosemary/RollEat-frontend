@@ -1,0 +1,24 @@
+/* CSS HEX */
+.buff {
+color: #db995aff;
+}
+
+.liver {
+color: #654236ff;
+}
+
+.vanilla {
+color: #d6d4a0ff;
+}
+
+.cocoa-brown {
+color: #da7635ff;
+}
+
+.flame {
+color: #e24e1bff;
+}
+
+.grad-brown-vanilla{
+    color: linear-gradient(62deg, #DB995A 0%, #D6D4A0 100%);
+}

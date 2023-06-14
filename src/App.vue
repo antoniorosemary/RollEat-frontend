@@ -4,32 +4,37 @@
       app
       dark
       color="#DA7635"
+      elevation="0"
+      extension-height="0"
+      height="64"
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Roll Eat Logo"
-          class="d-none d-sm-flex"
-          contain
-          src="./assets/Logo outlined 128x64.png"
-        />
-
-        <v-img
-          alt="Roll Eat Logo"
-          class="d-flex d-sm-none"
-          contain
-          src="./assets/Logo outlined 64x64.png"
-        />
-      </div>
-      <svg class="wave-top" viewBox="0 0 1440 50">
-      <path 
-        fill="#DA7635" 
-        fill-opacity="1" 
-        d="M 0 25 Q 360 -25 720 25 Q 1080 75 1440 25 L 1440 0 L 0 0 L 0 50"
-      />
-    </svg>
+      <template v-slot:default>
+        <div class="d-flex align-center">
+          <v-img
+            alt="Roll Eat Logo"
+            class="d-none d-sm-flex"
+            contain
+            src="./assets/Logo outlined 128x64.png"
+          />
+          <v-img
+            alt="Roll Eat Logo"
+            class="d-flex d-sm-none"
+            contain
+            src="./assets/Logo outlined 64x64.png"
+          />
+        </div>
+      </template>
+      
+      <template v-slot:extension>
+        <svg class="wave-top" viewBox="0 0 1440 55">
+          <path 
+            fill="#DA7635" 
+            fill-opacity="1" 
+            d="M 0 30 Q 360 -20 720 30 Q 1080 80 1440 30 L 1440 0 L 0 0 L 0 50"
+          />
+        </svg>
+      </template>
     </v-app-bar>
-
-   
 
     <v-main>
       <router-view/>
@@ -40,8 +45,12 @@
 
       <v-footer app style="background-color: rgb(255,0,0,0);">
         <svg class="wave-bottom" viewBox="0 0 1440 50" style="position: absolute; bottom: 100%; margin-bottom: -50px;">
-        <path fill="#DA7635" fill-opacity="1" d="M 0 25 Q 360 -25 720 25 Q 1080 75 1440 25 L 1440 50 L 0 50 L 0 50" />
-      </svg>
+          <path 
+            fill="#DA7635" 
+            fill-opacity="1" 
+            d="M 0 25 Q 360 -25 720 25 Q 1080 75 1440 25 L 1440 50 L 0 50 L 0 50"
+          />
+        </svg>
       </v-footer>
     </div>
   </v-app>
@@ -119,7 +128,7 @@ footer {
 
 .wave-top {
   position: absolute;
-  top: 64px;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 10;

@@ -40,19 +40,15 @@
       <router-view/>
     </v-main>
 
-    <div class="footer" style="position: relative;">
-      
-
-      <v-footer app style="background-color: rgb(255,0,0,0);">
-        <svg class="wave-bottom" viewBox="0 0 1440 50" style="position: absolute; bottom: 100%; margin-bottom: -50px;">
-          <path 
-            fill="#DA7635" 
-            fill-opacity="1" 
-            d="M 0 25 Q 360 -25 720 25 Q 1080 75 1440 25 L 1440 50 L 0 50 L 0 50"
-          />
-        </svg>
-      </v-footer>
-    </div>
+    <v-app-footer app color="white" >
+      <svg class="wave-bottom" viewBox="0 0 1440 50">
+        <path 
+          fill="#DA7635" 
+          fill-opacity="1" 
+          d="M 0 25 Q 360 -25 720 25 Q 1080 75 1440 25 L 1440 50 L 0 50 L 0 50"
+        />
+      </svg>
+    </v-app-footer>
   </v-app>
 </template>
 
@@ -89,41 +85,6 @@ body {
   justify-content: center;
   min-height: 100vh;
  /* padding:32px;*/
-}
-
-img {
-  max-width: 100%;
-  border-radius: 8px;
-}
-
-
-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100px; /* Height of the header */
-  z-index: 20;
-  background-color: #DA7635;
-  /* Add your other styles for the header here */
-}
-
-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100px; /* Height of the footer */
-  z-index: 20;
-  background-color: #DA7635;
-  /* Add your other styles for the footer here */
-}
-
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
 }
 
 .wave-top {

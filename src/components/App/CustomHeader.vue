@@ -8,9 +8,17 @@
     height="64"
   >
     <template v-slot:default>
-      <div class="d-flex align-center">
-        <ResponsiveLogo/>
-      </div>
+      <v-container class="ma-0" style="max-width: 100%">
+        <v-row justify="space-between" align="center">
+          <v-col class="col-auto">
+            <ResponsiveLogo/>
+          </v-col>
+
+          <v-col class="col-auto">
+            <UserButton/>
+          </v-col>
+        </v-row>
+      </v-container>
     </template>
     
     <template v-slot:extension>
@@ -27,9 +35,11 @@
   
 <script lang="ts">
 import ResponsiveLogo from '../ResponsiveLogo.vue';
+import UserButton from '../UserButton.vue';
 export default {
   components: {
-    ResponsiveLogo
+    ResponsiveLogo,
+    UserButton
   }
 }
 </script>

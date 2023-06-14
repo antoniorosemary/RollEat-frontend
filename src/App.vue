@@ -20,11 +20,7 @@ export default Vue.extend({
   components: {
     CustomHeader,
     CustomFooter
-},
-
-  data: () => ({
-    //
-  }),
+  }
 });
 </script>
 
@@ -40,11 +36,11 @@ export default Vue.extend({
 }
 
 #app {
-  max-width: 100%;
+  width: 100%;
+  background-image: linear-gradient(62deg, #DB995A 0%, #D6D4A0 100%);
 }
 
 body {
-  background-image: linear-gradient(62deg, #DB995A 0%, #D6D4A0 100%);
   display: flex;
   align-items: center;
   justify-content: center;

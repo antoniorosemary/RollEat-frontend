@@ -10,18 +10,7 @@
     >
       <template v-slot:default>
         <div class="d-flex align-center">
-          <v-img
-            alt="Roll Eat Logo"
-            class="d-none d-sm-flex"
-            contain
-            src="./assets/Logo outlined 128x64.png"
-          />
-          <v-img
-            alt="Roll Eat Logo"
-            class="d-flex d-sm-none"
-            contain
-            src="./assets/Logo outlined 64x64.png"
-          />
+          <ResponsiveLogo/>
         </div>
       </template>
       
@@ -48,9 +37,45 @@
           d="M 0 25 Q 360 -25 720 25 Q 1080 75 1440 25 L 1440 55 L 0 55 L 0 55"
         />
       </svg>
-      <div class="footer-body">
-      test
-      </div>
+      <v-container class="ma-0 footer-body" style="max-width: 100%">
+        <v-row>
+          <v-col class="col-auto">
+            <ResponsiveLogo/>
+          </v-col>
+          <v-spacer/>
+          <v-col class="col-auto container mr-sm-10 mr-n16">
+            <v-row no-gutters>
+              <v-col class="col-12 footer-link" sm="6">
+                <a>Nous contacter</a>
+              </v-col>
+              <v-col class="col-12 footer-link" sm="6">
+                <a>Devenir Livreur</a>
+              </v-col>
+            </v-row>
+            <v-row no-gutters>
+              <v-col class="col-12 footer-link" sm="6">
+                <a>A propos de Roll Eat</a>
+              </v-col>
+              <v-col class="col-12 footer-link" sm="6">
+                <a>Ajouter votre restaurant</a>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
+      <!--div class="footer-body d-flex justify-space-around">
+        <ResponsiveLogo/>
+        <div class="d-flex justify-sm-space-around">
+          <div>
+            <a>Nous contacter</a><br>
+            <a>Ajouter votre restaurant</a>
+          </div>
+          <div>
+            <a>Devenir Livreur</a><br>
+            <a>A propos de Roll Eat</a>
+          </div>
+        </div>
+      </div-->
       <!--Alexandre est beau, fort et puissant. Gloire a son éternité !-->
     </footer>
     
@@ -59,9 +84,13 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import ResponsiveLogo from './components/ResponsiveLogo.vue';
 
 export default Vue.extend({
   name: 'App',
+  components: {
+    ResponsiveLogo
+},
 
   data: () => ({
     //
@@ -107,5 +136,11 @@ body {
 
 .footer-body {
   background-color: #DA7635;
+  color: white; 
+  height: 120px;
+}
+
+.footer-link {
+  max-width: 200px;
 }
 </style>

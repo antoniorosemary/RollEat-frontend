@@ -40,15 +40,20 @@
       <router-view/>
     </v-main>
 
-    <v-app-footer app color="white" >
-      <svg class="wave-bottom" viewBox="0 0 1440 50">
+    <footer>
+      <svg class="wave-bottom" viewBox="0 0 1440 55">
         <path 
           fill="#DA7635" 
           fill-opacity="1" 
-          d="M 0 25 Q 360 -25 720 25 Q 1080 75 1440 25 L 1440 50 L 0 50 L 0 50"
+          d="M 0 25 Q 360 -25 720 25 Q 1080 75 1440 25 L 1440 55 L 0 55 L 0 55"
         />
       </svg>
-    </v-app-footer>
+      <div class="footer-body">
+      test
+      </div>
+      <!--Alexandre est beau, fort et puissant. Gloire a son éternité !-->
+    </footer>
+    
   </v-app>
 </template>
 
@@ -64,6 +69,7 @@ export default Vue.extend({
 });
 </script>
 
+<style src="./colors.css"/>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;800&display=swap');
 
@@ -92,7 +98,14 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10;
   width: 100%;
+}
+
+.wave-bottom {
+  margin-bottom: -7px;
+}
+
+.footer-body {
+  background-color: #DA7635;
 }
 </style>

@@ -36,10 +36,17 @@
           </v-card-actions>
         </v-form>
       </v-card-text>
+      <v-alert
+      outlined
+      type="warning"
+      prominent
+      border="left"
+      v-if="loginMessage"
+      >
+    {{ loginMessage }}  
+    </v-alert>
     </v-card>
-    <v-container v-if="loginMessage" class="mt-4">
-      <v-alert outlined>{{ loginMessage }}</v-alert>
-    </v-container>
+    
   </v-container>
 </template>
 
@@ -66,7 +73,7 @@ export default {
           console.log(response.data);
           // Traitez la réponse de l'API Gateway ici
           this.loginMessage = 'Connexion réussie!';
-          this.$router.push('/accueil'); // Redirection vers la page d'accueil
+          this.$router.push('/restaurant'); // Redirection vers la page d'accueil
         })
         .catch(error => {
           console.error(error);

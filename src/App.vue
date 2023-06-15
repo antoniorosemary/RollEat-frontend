@@ -1,92 +1,73 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      dark
-      color="#DA7635"
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Roll Eat Logo"
-          class="d-none d-sm-flex"
-          contain
-          src="./assets/Logo outlined 128x64.png"
-        />
-
-        <v-img
-          alt="Roll Eat Logo"
-          class="d-flex d-sm-none"
-          contain
-          src="./assets/Logo outlined 64x64.png"
-        />
+  <div>
+    <!-- Header -->
+    <header>
+      <img alt="Vue logo" src="./assets/logo.png" id="logo">
+      <div id="app">
+        <nav>
+          <router-link to="/">Home</router-link> |
+          <router-link to="/about">About</router-link> | 
+          <router-link to="/test">Test</router-link>
+        </nav>
       </div>
-      <svg class="wave-top" viewBox="0 0 1440 50">
+    </header>
+
+    <!--vague supérieure-->
+    <svg class="wave-top" viewBox="0 0 1440 50">
       <path 
         fill="#DA7635" 
         fill-opacity="1" 
         d="M 0 25 Q 360 -25 720 25 Q 1080 75 1440 25 L 1440 0 L 0 0 L 0 50"
       />
     </svg>
-    </v-app-bar>
 
-   
+    <router-view/>
 
-    <v-main>
-      <router-view/>
-    </v-main>
+    <!--vague inférieure-->
+    <svg class="wave-bottom" viewBox="0 0 1440 50">
+      <path 
+        fill="#DA7635" 
+        fill-opacity="1" 
+        d="M 0 25 Q 360 -25 720 25 Q 1080 75 1440 25 L 1440 50 L 0 50 L 0 50"
+      />
+    </svg>
 
-    <div class="footer" style="position: relative;">
+    <!-- Footer -->
+    <footer>
+      <!-- Add your credits here -->
       
-
-      <v-footer app style="background-color: rgb(255,0,0,0);">
-        <svg class="wave-bottom" viewBox="0 0 1440 50" style="position: absolute; bottom: 100%; margin-bottom: -50px;">
-        <path fill="#DA7635" fill-opacity="1" d="M 0 25 Q 360 -25 720 25 Q 1080 75 1440 25 L 1440 50 L 0 50 L 0 50" />
-      </svg>
-      </v-footer>
-    </div>
-  </v-app>
+    </footer>
+  </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
-  name: 'App',
-
-  data: () => ({
-    //
-  }),
-});
-</script>
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;800&display=swap');
-
-* {
-  font-family: 'Poppins', sans-serif;
-  margin:0;
-  padding: 0;
-  box-sizing: border-box;
+#logo{
+  position : absolute; 
+  left : 0px; 
+  top : 1px;
+  height: 100px;
 }
 
 #app {
-  max-width: 100%;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
-body {
-  background-image: linear-gradient(62deg, #DB995A 0%, #D6D4A0 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
- /* padding:32px;*/
+nav {
+  padding: 30px;
 }
 
-img {
-  max-width: 100%;
-  border-radius: 8px;
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
 }
 
+nav a.router-link-exact-active {
+  color: #42b983;
+}
 
 header {
   position: absolute;
@@ -100,7 +81,7 @@ header {
 }
 
 footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -110,19 +91,26 @@ footer {
   /* Add your other styles for the footer here */
 }
 
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-}
-
 .wave-top {
   position: absolute;
-  top: 64px;
+  top: 100px;
   left: 0;
   right: 0;
   z-index: 10;
   width: 100%;
+}
+
+.wave-bottom {
+  position: fixed;
+  bottom: 100px; /* Height of the footer */
+  left: 0;
+  right: 0;
+  z-index: 10;
+  width: 100%;
+}
+
+body {
+  background: #DB995A;
+  padding:180px;
 }
 </style>

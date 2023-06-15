@@ -39,11 +39,6 @@ const routes: Array<RouteConfig> = [
     component: Restaurant
   },
   {
-    path: '/login',
-    name: 'login',
-    component: Login
-  },
-  {
     path: '/register',
     name: 'register',
     component: Register

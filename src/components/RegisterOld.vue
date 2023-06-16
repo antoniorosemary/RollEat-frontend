@@ -1,26 +1,16 @@
-
-
 <template>
-  <v-container 
-    fluid 
-    class="d-flex justify-center align-center" 
-    style="
-      height: 100vh;
-      width: 100vw; 
-      background-image: linear-gradient(62deg, #DB995A 0%, #D6D4A0 100%);
-    "
-  >  
+  <v-container fluid class="d-flex justify-center align-center" style="height: 100vh;width: 100vw; background-image: linear-gradient(62deg, #DB995A 0%, #D6D4A0 100%);">
+    
     <v-card class="elevation-3" >
+      <v-progress-linear :value="progress" color="#e24e1bff"></v-progress-linear>
       <v-card-title h3>
         Créer un compte
       </v-card-title>
       <v-card-subtitle>
         Vous avez déja un compte ? 
-          <router-link :to="hrefLogin">
-            <a>
-              connectez vous
-            </a>
-          </router-link>
+        <a :href="hrefLogin">
+          connectez vous
+        </a>
       </v-card-subtitle>
 
       <v-card-text>
@@ -35,7 +25,7 @@
               @input="$v.email.$touch()"
               @blur="$v.email.$touch()"
               color="#654236ff"
-            />
+            ></v-text-field>
 
             <v-text-field
               prepend-icon="lock"
@@ -47,7 +37,7 @@
               @input="$v.password.$touch()"
               @blur="$v.password.$touch()"
               color="#654236ff"
-            />
+            ></v-text-field>
 
             <v-text-field
               prepend-icon="lock"
@@ -59,22 +49,24 @@
               @input="$v.confirmPassword.$touch()"
               @blur="$v.confirmPassword.$touch()"
               color="#654236ff"
-            />
-
+            ></v-text-field>
+            
             <v-select
               prepend-icon="person"
-              v-model="roleSelected"
-              :items="roleOptions"
-              :error-messages="roleSelectedErrors"
+              v-model="selectedOption"
+              :items="options"
+              :error-messages="selectedOptionErrors"
               label="Sélectionnez une option"
               required
-              @input="$v.roleSelected.$touch()"
-              @blur="$v.roleSelected.$touch()"
+              @input="$v.selectedOption.$touch()"
+              @blur="$v.selectedOption.$touch()"
               color="#654236ff"
-            />
+            ></v-select>
+
+
           </div>
 
-          <div v-else-if="step ===2">
+          <div v-if="step === 2">
             <v-text-field
               prepend-icon="person"
               v-model="firstName"
@@ -85,7 +77,7 @@
               @input="$v.firstName.$touch()"
               @blur="$v.firstName.$touch()"
               color="#654236ff"
-            />
+            ></v-text-field>
 
             <v-text-field
               prepend-icon="person"
@@ -97,7 +89,7 @@
               @input="$v.lastName.$touch()"
               @blur="$v.lastName.$touch()"
               color="#654236ff"
-            />
+            ></v-text-field>
 
             <v-text-field
               prepend-icon="phone"
@@ -108,7 +100,7 @@
               @input="$v.phone.$touch()"
               @blur="$v.phone.$touch()"
               color="#654236ff"
-            />
+            ></v-text-field>
 
             <v-text-field
               prepend-icon="person"
@@ -117,10 +109,10 @@
               @input="$v.affiliation.$touch()"
               @blur="$v.affiliation.$touch()"
               color="#654236ff"
-            />
+            ></v-text-field>
 
             <v-menu
-              v-model="dateOfBirthMenu"
+              v-model="menu"
               :close-on-content-click="false"
               :nudge-right="40"
               transition="scale-transition"
@@ -137,13 +129,13 @@
                   v-bind="attrs"
                   v-on="on"
                   color="#654236ff"
-                />
+                ></v-text-field>
               </template>
-              <v-date-picker v-model="dateOfBirth" @input="dateOfBirthMenu = false"></v-date-picker>
+              <v-date-picker v-model="dateOfBirth" @input="menu = false"></v-date-picker>
             </v-menu>
           </div>
 
-          <div v-else>
+          <div v-if="step === 3">
             <v-text-field
               prepend-icon="map-marker"
               v-model="address"
@@ -153,7 +145,7 @@
               @input="$v.address.$touch()"
               @blur="$v.address.$touch()"
               color="#654236ff"
-            />
+            ></v-text-field>
 
             <v-text-field
               prepend-icon="earth"
@@ -164,7 +156,7 @@
               @input="$v.country.$touch()"
               @blur="$v.country.$touch()"
               color="#654236ff"
-            />
+            ></v-text-field>
 
             <v-text-field
               prepend-icon="city"
@@ -175,7 +167,7 @@
               @input="$v.city.$touch()"
               @blur="$v.city.$touch()"
               color="#654236ff"
-            />
+            ></v-text-field>
 
             <v-text-field
               prepend-icon="map"
@@ -186,10 +178,10 @@
               @input="$v.postalCode.$touch()"
               @blur="$v.postalCode.$touch()"
               color="#654236ff"
-            />
+            ></v-text-field>
           </div>
+          
         </v-form>
-
         <v-alert
           outlined
           type="warning"
@@ -200,7 +192,6 @@
           {{ registerMessage }}  
         </v-alert>
       </v-card-text>
-
       <v-card-actions>
         <v-btn color=#d6d4a0ff @click="previousStep" :disabled="step === 1">
           Étape précédente
@@ -210,29 +201,35 @@
           {{ step < 3 ? 'Étape suivante' : 'S\'inscrire' }}
         </v-btn>
       </v-card-actions>
-
     </v-card>
 
   </v-container>
 </template>
 
+<style>
+</style>
+
 <script lang="ts">
 import Vue from 'vue'
-import { required, email, helpers, sameAs, maxLength } from 'vuelidate/lib/validators';
-import axios from 'axios';
-
 import { mapState } from 'vuex';
-import {validationMixin} from 'vuelidate';
+import { required, maxLength, email, helpers, sameAs } from 'vuelidate/lib/validators';
+import axios, { AxiosResponse } from 'axios';
+import { validationMixin } from 'vuelidate'
 
-const numeric = helpers.regex('numeric', /^[0-9]*$/)
-
-// step === 1
 const passwordMinLength = helpers.withParams(
   { 
     type: 'contains',
     min: 8 
   },
   (value :string) => value.length >= 8
+)
+
+
+const numeric = helpers.regex('numeric', /^[0-9]*$/)
+
+const phoneFormat = helpers.withParams(
+  {type: 'contains'},
+  (value :string) => /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?[-\s\.]?[0-9]{1,4}[-\s\.]?[0-9]{1,9}$/im.test(value)
 )
 
 const passwordHasUppercase = helpers.withParams(
@@ -255,46 +252,71 @@ const passwordHasSpecialChar = helpers.withParams(
   (value :string) => /[!@#$%^&*]/.test(value)
 )
 
-// step === 2
-const phoneFormat = helpers.withParams(
-  {type: 'contains'},
-  (value :string) => /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?[-\s\.]?[0-9]{1,4}[-\s\.]?[0-9]{1,9}$/im.test(value)
-)
+const submitForm = async (formData : any) : Promise<void/*{status: boolean, msg: string}*/> => {
+  try {
+    var res = await axios.post('http://localhost:3000/register', { formData })
+        //.then(response => {
+    if (res.status != 200){
+      console.log(res.data);
+      // Traitez la réponse de l'API Gateway ici
+      vueInstance.arguments.registerMessage = 'Création du compte réussi!'
+      /*return {
+        status: true,
+        msg: 'Création du compte réussi!'
+      };*/
+    }
+    
+  //})
+  //.catch(error => {
+    console.error(res);
+    // Traitez les erreurs ici
+    /*return {
+      status: false,
+      msg: 'Identifiant ou mot de passe incorrect !'
+    };*/
+        //});
+  } catch (error) {
+    console.error(error);
+    /*return {
+      status: false,
+      msg: 'autre'
+    };*/
+  }
+}
 
-// step === 3
-
-export default Vue.extend({
+const vueInstance = Vue.extend({
   mixins: [validationMixin],
   data() {
     return {
       step: 1,
-      registerMessage: '',
-
-      // step === 1
-      email: '',
-      password: '',
-      confirmPassword: '',
-      roleSelected: null,
-      roleOptions: ['client', 'restaurant', 'livreur'],
-      
-      // step === 2
+      menu: false,
+      dateOfBirth: null,
       firstName: '',
       lastName: '',
       phone: '',
-      affiliation: '',
-      dateOfBirthMenu: false,
-      dateOfBirth: null,
-
-      // step === 3
       address: '',
       country: '',
       city: '',
       postalCode: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      selectedOption: null,
+      affiliation: '',
+      options: ['client', 'restaurant', 'livreur'],
+      registerMessage: '',
     }
   },
   validations: {
-    // step === 1
+    firstName: { required, maxLength: maxLength(50) },
+    lastName: { required, maxLength: maxLength(50) },
+    phone: { required, phoneFormat },
+    address: { required },
+    country: { required },
+    city: { required },
+    postalCode: { required, numeric },
     email: { required, email },
+    selectedOption: { required },
     password: {
       required,
       passwordMinLength,
@@ -303,62 +325,17 @@ export default Vue.extend({
       passwordHasDigit,
       passwordHasSpecialChar
     },
-    confirmPassword: {sameAsPassword: sameAs('password')},
-    roleSelected: { required },
-
-    // step === 2
-    firstName: { required, maxLength: maxLength(50) },
-    lastName: { required, maxLength: maxLength(50) },
-    phone: { required, phoneFormat },
+    //affiliation: { required },
     dateOfBirth: { required },
-
-    // step === 3
-    address: { required },
-    country: { required },
-    city: { required },
-    postalCode: {required, numeric}
+    confirmPassword: {sameAsPassword: sameAs('password')},
   },
   computed: {
     ...mapState([
       'hrefLogin'
     ]),
-    progress():number {
+    progress() {
       return this.step * 33.33;
     },
-    
-    // step === 1
-    emailErrors () {
-      const errors : Array<string> = []
-      if (!this.$v.email.$dirty) return errors
-      !this.$v.email.email && errors.push('Must be a valid e-mail')
-      !this.$v.email.required && errors.push('E-mail is required')
-      return errors
-    },
-    passwordErrors () {
-      const errors : Array<string> = []
-      if (!this.$v.password.$dirty) return errors
-      !this.$v.password.required && errors.push('Password is required.')
-      !this.$v.password.passwordMinLength && errors.push('Password must be at least 8 characters long.')
-      !this.$v.password.passwordHasUppercase && errors.push('Password must contain at least one uppercase letter.')
-      !this.$v.password.passwordHasLowercase && errors.push('Password must contain at least one lowercase letter.')
-      !this.$v.password.passwordHasDigit && errors.push('Password must contain at least one digit.')
-      !this.$v.password.passwordHasSpecialChar && errors.push('Password must contain at least one special character.')
-      return errors
-    },
-    confirmPasswordErrors() {
-      const errors : Array<string> = []
-      if (!this.$v.confirmPassword.$dirty) return errors
-      !this.$v.confirmPassword.sameAsPassword && errors.push('Password confirmation does not match.')
-      return errors
-    },
-    roleSelectedErrors() {
-      const errors : Array<string> = [];
-      if (!this.$v.roleSelected.$dirty) return errors;
-      !this.$v.roleSelected.required && errors.push('Veuillez sélectionner une option.');
-      return errors;
-    },
-
-    // step === 2
     firstNameErrors () {
       const errors : Array<string> = []
       if (!this.$v.firstName.$dirty) return errors
@@ -370,8 +347,14 @@ export default Vue.extend({
       const errors : Array<string> = []
       if (!this.$v.lastName.$dirty) return errors
       !this.$v.lastName.required && errors.push('Last name is required.')
-      !this.$v.lastName.maxLength && errors.push('LastName must be at most 50 characters long')
+      !this.$v.firstName.maxLength && errors.push('LastName must be at most 50 characters long')
       return errors
+    },
+    selectedOptionErrors() {
+      const errors : Array<string> = [];
+      if (!this.$v.selectedOption.$dirty) return errors;
+      !this.$v.selectedOption.required && errors.push('Veuillez sélectionner une option.');
+      return errors;
     },
     phoneErrors () {
       const errors : Array<string> = []
@@ -381,14 +364,6 @@ export default Vue.extend({
 
       return errors
     },
-    dateOfBirthErrors () {
-      const errors : Array<string> = []
-      if (!this.$v.dateOfBirth.$dirty) return errors
-      !this.$v.dateOfBirth.required && errors.push('Date of birth is required.')
-      return errors
-    },
-
-    // step === 3
     addressErrors () {
       const errors : Array<string> = []
       if (!this.$v.address.$dirty) return errors
@@ -414,29 +389,44 @@ export default Vue.extend({
       !this.$v.postalCode.numeric && errors.push('Postal code must be numeric.')
       return errors
     },
-  },
-
-  methods: {
-    previousStep(): void {
-      if (this.step > 1) {
-        this.step--
-      }
+    emailErrors () {
+      const errors : Array<string> = []
+      if (!this.$v.email.$dirty) return errors
+      !this.$v.email.email && errors.push('Must be a valid e-mail')
+      !this.$v.email.required && errors.push('E-mail is required')
+      return errors
     },
+    passwordErrors () {
+      const errors : Array<string> = []
+      if (!this.$v.password.$dirty) return errors
+      !this.$v.password.required && errors.push('Password is required.')
+      !this.$v.password.passwordMinLength && errors.push('Password must be at least 8 characters long.')
+      !this.$v.password.passwordHasUppercase && errors.push('Password must contain at least one uppercase letter.')
+      !this.$v.password.passwordHasLowercase && errors.push('Password must contain at least one lowercase letter.')
+      !this.$v.password.passwordHasDigit && errors.push('Password must contain at least one digit.')
+      !this.$v.password.passwordHasSpecialChar && errors.push('Password must contain at least one special character.')
+      return errors
+    },
+    dateOfBirthErrors () {
+      const errors : Array<string> = []
+      if (!this.$v.dateOfBirth.$dirty) return errors
+      !this.$v.dateOfBirth.required && errors.push('Date of birth is required.')
+      return errors
+    },
+    confirmPasswordErrors() {
+      const errors : Array<string> = []
+      if (!this.$v.confirmPassword.$dirty) return errors
+      !this.$v.confirmPassword.sameAsPassword && errors.push('Password confirmation does not match.')
+      return errors
+    },
+  },
+  methods: {
     nextStep() : void{
-      if (this.step === 1 
-        && !this.$v.email.$invalid 
-        && !this.$v.password.$invalid 
-        && !this.$v.selectedOption.$invalid
-      )
-        this.step = 2
-      else if (this.step === 2 
-        && !this.$v.firstName.$invalid 
-        && !this.$v.lastName.$invalid 
-        && !this.$v.phone.$invalid 
-        && !this.$v.dateOfBirth.$invalid
-      )
-        this.step = 3
-      else if (this.step === 3 && !this.$v.$invalid) {
+      if (this.step === 1 && !this.$v.email.$invalid && !this.$v.password.$invalid && !this.$v.selectedOption.$invalid) {
+        this.step++
+      } else if (this.step === 2 && !this.$v.firstName.$invalid && !this.$v.lastName.$invalid && !this.$v.phone.$invalid && !this.$v.dateOfBirth.$invalid) {
+        this.step++
+      } else if (this.step === 3 && !this.$v.$invalid) {
         const formData = {
           firstName: this.firstName,
           lastName: this.lastName,
@@ -451,27 +441,56 @@ export default Vue.extend({
           role: this.selectedOption,
           affiliationCode: this.affiliation,
         }
-        this.submitForm(formData);
+        this.registerMessage
+        //submitForm(formData,loginMessage).then((value) => {if (value) this.$router.push('/restaurant'); });
+        // var res = await axios.post('http://localhost:3000/register', { formData })
+        submitForm(formData);
+        /*submitForm(formData).then(value => {
+          this.registerMessage = value.msg;
+          if(value.status)
+            this.$router.push('/login')
+        });*/
+        /*axios.post('http://localhost:3000/register', {  formData  })
+          .then(response => {
+            console.log(response.data);
+            // Traitez la réponse de l'API Gateway ici
+            this.registerMessage = 'Utilisateur enregistré!';
+            this.$router.push('/login'); // Redirection vers la page d'accueil
+          })
+          .catch(error => {
+            console.error(error);
+            // Traitez les erreurs ici
+            this.registerMessage = 'Identifiant ou mot de passe incorrect !';
+          });  */
       }
     },
-    submitForm(formData : any) {
-      axios.post('http://localhost:3000/register', formData)
-        .then(response => {
-          console.log(response.data);
-          // Traitez la réponse de l'API Gateway ici
-          this.registerMessage = 'Connexion réussie!';
-          this.$router.push('/restaurant'); // Redirection vers la page d'accueil
-        })
-        .catch(error => {
-          console.error(error);
-          // Traitez les erreurs ici
-          this.registerMessage = 'Identifiant ou mot de passe incorrect !';
-        });
-    }
+
+    previousStep() : void{
+      if (this.step > 1) {
+        this.step--
+      }
+    },
+    /*submitForm(formData:any) {
+      axios.post('http://localhost:3000/register', {  formData  })
+          .then(this.afterSubmitForm)
+          .catch(error => {
+            console.error(error);
+            // Traitez les erreurs ici
+            this.registerMessage = 'Identifiant ou mot de passe incorrect !';
+          });
+    },
+    afterSubmitForm(response : AxiosResponse<any, any>){
+      console.log(response.data);
+      // Traitez la réponse de l'API Gateway ici
+      this.registerMessage = 'Utilisateur enregistré!';
+      this.$router.push('/login'); // Redirection vers la page d'accueil
+    },
+    setRegisterMessage(msg:string):void{
+      this.registerMessage = msg;
+    }*/
+    // ...
   }
 })
 
+export default vueInstance
 </script>
-
-<style>
-</style>

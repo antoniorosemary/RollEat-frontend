@@ -1,23 +1,94 @@
 <template>
   <div>
-    <div id="DetailsRestau" v-if="Display">
-      <DetailRestaurant :Restaurant="RestaurantToDetail"/>
-    </div>
+    <v-dialog
+    v-model="Display"
+    width="1000">
+        <v-card
+            class="DisplayRestaurant"
+            max-width="1000"
+        >
+            <v-img
+            :src="RestaurantToDetail.Image"
+            max-height="500px"
+            cover
+            id="ImgRestaurant"
+            ></v-img>
+
+            <v-card-text>
+            <v-row
+                align="center"
+                class="mx-0"
+            >
+            <v-rating
+                v-model="RestaurantToDetail.Note"
+                color="yellow"
+                size="Medium"
+                half-increments
+                readonly
+            ></v-rating>
+            
+                <div class="text-grey ms-4">
+                {{RestaurantToDetail.Note}}
+                </div>
+            </v-row>
+                
+            <v-card-title>
+                {{RestaurantToDetail.Name}}
+            </v-card-title>
+
+            <v-card-subtitle>
+                {{RestaurantToDetail.Ville}}
+            </v-card-subtitle>
+            </v-card-text>
+
+        </v-card>
+    </v-dialog>
     <v-container>
-      <v-row no-gutters>
-        <v-col lg="4" v-for="Restau in Restaurants">
-          <div class="DisplayRestaurant" v-on:click="ToggleDisplay(), TransfertRestaurant(Restau)">
-            <img alt="Restaurant" :src="Restau.Image" id="ImgRestaurant">
-            <tr>
-              <td>
-                <h1 id="left">{{Restau.Name}}</h1>
-              </td>
-              <td>
-                <h1 id="right">{{Restau.Note}} &#11088</h1>
-              </td>
-            </tr>
-            <h2 id="left">{{Restau.Ville}}</h2>
-          </div>
+      <v-row>
+        <v-col 
+        lg="auto" 
+        v-for="Restau in Restaurants" 
+        v-on:click="ToggleDisplay(), TransfertRestaurant(Restau)"
+        >
+          <v-card
+            class="DisplayRestaurant"
+            max-width="344"
+          >
+            <v-img
+              :src="Restau.Image"
+              height="160px"
+              cover
+              id="ImgRestaurant"
+            ></v-img>
+
+            <v-card-text>
+              <v-row
+                align="center"
+                class="mx-0"
+              >
+              <v-rating
+                v-model="Restau.Note"
+                color="yellow"
+                size="Medium"
+                half-increments
+                readonly
+              ></v-rating>
+              
+                <div class="text-grey ms-4">
+                  {{Restau.Note}}
+                </div>
+              </v-row>
+                
+              <v-card-title>
+                {{Restau.Name}}
+              </v-card-title>
+
+              <v-card-subtitle>
+                {{Restau.Ville}}
+              </v-card-subtitle>
+            </v-card-text>
+
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -71,46 +142,7 @@ export default Vue.extend({
 
 <style scoped>
 .DisplayRestaurant {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: lightgray;
   border-radius: 25px;
-  padding: 10px;
-  margin: 20px;
-  text-align: center;
 }
 
-#left{
-  text-align: left;
-  white-space : nowrap;
-}
-
-#right{
-  text-align: right;
-  white-space : nowrap;
-}
-
-h1{
-  
-  font-size: 25px;
-  padding: 3px;
-}
-h2{
-
-  Color: gray;
-  padding: 3px;
-  font-size: 20px;
-}
-
-td{
-  width: 10%;
-}
-#ImgRestaurant{
-  justify-content: center;
-  height: 150px;
-  width: 90%;
-  margin: 10px;
-  margin-top: 20px;
-  border-radius: 25px;
-  object-fit: cover;
-}
-  </style>
+</style>

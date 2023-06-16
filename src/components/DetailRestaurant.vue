@@ -1,23 +1,59 @@
 <template>
-    <div class="DisplayRestaurant">
-        <img alt="Restaurant" :src="Restaurant.Image" id="ImgRestaurant">
-            <tr>
-              <td>
-                <h1 id="left">{{Restaurant.Name}}</h1>
-              </td>
-              <td>
-                <h1 id="right">{{Restaurant.Note}} &#11088</h1>
-              </td>
-            </tr>
-            <h2 id="left">{{Restaurant.Ville}}</h2>
-    </div>
+<div>
+    <v-dialog
+    v-model="Display"
+    width="500">
+        <v-card
+            class="DisplayRestaurant"
+            max-width="344"
+        >
+            <v-img
+            :src="Restaurant.Image"
+            height="160px"
+            cover
+            id="ImgRestaurant"
+            ></v-img>
+
+            <v-card-text>
+            <v-row
+                align="center"
+                class="mx-0"
+            >
+            <v-rating
+                v-model="Restaurant.Note"
+                color="yellow"
+                size="Medium"
+                half-increments
+                readonly
+            ></v-rating>
+            
+                <div class="text-grey ms-4">
+                {{Restaurant.Note}}
+                </div>
+            </v-row>
+                
+            <v-card-title>
+                {{Restaurant.Name}}
+            </v-card-title>
+
+            <v-card-subtitle>
+                {{Restaurant.Ville}}
+            </v-card-subtitle>
+            </v-card-text>
+
+        </v-card>
+    </v-dialog>
+</div>
 </template>
-  
+
 <script lang="ts">
     import { Component, Prop, Vue } from 'vue-property-decorator';
     import Restaurant from '../Types/Restaurant';
     import type { PropType } from "vue";
 
+    interface DetailRestaurant {
+        Display: boolean,
+    }
     export default {
     name: 'DetailRestaurant',
     props:{
@@ -26,49 +62,16 @@
             required: true
         },
     },
+    data():DetailRestaurant {
+    return {
+      Display: true,
+    };
+  },
 }
 </script>
 
 <style scoped>
 .DisplayRestaurant {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: lightgray;
-    border-radius: 25px;
-    padding: 10px;
-    margin: 20px;
-    text-align: center;
-}
-
-#left{
-    text-align: left;
-    white-space : nowrap;
-}
-
-#right{
-    text-align: right;
-}
-
-h1{
-    font-size: 25px;
-    padding: 3px;
-}
-
-h2{
-    Color: gray;
-    padding: 3px;
-    font-size: 20px;
-}
-
-td{
-    width: 10%;
-}
-#ImgRestaurant{
-    justify-content: center;
-    height: 150px;
-    width: 90%;
-    margin: 10px;
-    margin-top: 20px;
-    border-radius: 25px;
-    object-fit: cover;
+  border-radius: 25px;
 }
 </style>

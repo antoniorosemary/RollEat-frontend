@@ -50,6 +50,18 @@
               @blur="$v.confirmPassword.$touch()"
               color="#654236ff"
             ></v-text-field>
+            
+            <v-select
+              prepend-icon="person"
+              v-model="selectedOption"
+              :items="options"
+              :error-messages="selectedOptionErrors"
+              label="Sélectionnez une option"
+              required
+              @input="$v.selectedOption.$touch()"
+              @blur="$v.selectedOption.$touch()"
+              color="#654236ff"
+            ></v-select>
 
 
           </div>
@@ -87,6 +99,15 @@
               required
               @input="$v.phone.$touch()"
               @blur="$v.phone.$touch()"
+              color="#654236ff"
+            ></v-text-field>
+
+            <v-text-field
+              prepend-icon="person"
+              v-model="affiliation"
+              label="Code de parrainage"
+              @input="$v.affiliation.$touch()"
+              @blur="$v.affiliation.$touch()"
               color="#654236ff"
             ></v-text-field>
 
@@ -169,7 +190,7 @@
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn color=#da7635ff @click="nextStep">
-          {{ step < 3 ? 'Étape suivante' : 'Se connecter' }}
+          {{ step < 3 ? 'Étape suivante' : 'S\'inscrire' }}
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -236,6 +257,9 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
+      selectedOption: null,
+      affiliation: '',
+      options: ['client', 'restaurant', 'livreur'],
       // ...
     }
   },
@@ -248,6 +272,7 @@ export default {
     city: { required },
     postalCode: { required, numeric },
     email: { required, email },
+    selectedOption: { required },
     password: {
       required,
       passwordMinLength,
@@ -256,6 +281,7 @@ export default {
       passwordHasDigit,
       passwordHasSpecialChar
     },
+    //affiliation: { required },
     dateOfBirth: { required },
     confirmPassword: {sameAsPassword: sameAs('password')},
   },
@@ -276,6 +302,12 @@ export default {
       !this.$v.lastName.required && errors.push('Last name is required.')
       !this.$v.firstName.maxLength && errors.push('LastName must be at most 50 characters long')
       return errors
+    },
+    selectedOptionErrors() {
+      const errors = [];
+      if (!this.$v.selectedOption.$dirty) return errors;
+      !this.$v.selectedOption.required && errors.push('Veuillez sélectionner une option.');
+      return errors;
     },
     phoneErrors () {
       const errors = []
@@ -343,7 +375,7 @@ export default {
   },
   methods: {
     nextStep() {
-      if (this.step === 1 && !this.$v.email.$invalid && !this.$v.password.$invalid) {
+      if (this.step === 1 && !this.$v.email.$invalid && !this.$v.password.$invalid && !this.$v.selectedOption.$invalid) {
         this.step++
       } else if (this.step === 2 && !this.$v.firstName.$invalid && !this.$v.lastName.$invalid && !this.$v.phone.$invalid && !this.$v.dateOfBirth.$invalid) {
         this.step++
@@ -369,6 +401,8 @@ export default {
         email: this.email,
         password: this.password,
         dateOfBirth: this.dateOfBirth,
+        role: this.selectedOption,
+        affiliationCode: this.affiliation,
       };
 
       try {

@@ -6,7 +6,7 @@
     <div class="Title">
         <h1>Roll Eat</h1>
     </div>
-    <p>Vous êtes connecté en tant que {{ test }}</p>
+    <h2>Fast Food</h2>
     <DisplayRestaurant  :Restaurants="Restaurants"></DisplayRestaurant>
     </div>
 </template>
@@ -22,33 +22,35 @@
     },
     data() {
       return {
-        test: 'test1',
         Restaurants: [
           {
-            Image: "../assets/Kebabduseigneur.jpg",
+            Image: "https://images.midilibre.fr/api/v1/images/view/5b462d753e45466a4e3f50e1/large/image.jpg",
             Name: "Kebab Du Seigneur",
             Ville: "Strasbourg",
             Note: 4.6,
           },
           {
-            Image: "../assets/McDounald.jpg",
+            Image: "https://mapio.net/images-p/35547871.jpg",
             Name: "McDounald",
             Ville: "Ouganda",
             Note: 12,
           },
           {
-            Image: "../assets/Kebabduseigneur.jpg",
+            Image: "https://cloudfront-eu-central-1.images.arcpublishing.com/leparisien/ZLCWHTEO5RH57CBOFSBSPN24MA.jpg",
             Name: "Kebab Whalla",
             Ville: "Ostwald",
             Note: 3.2,
           },
           {
-            Image: "../assets/Kebabduseigneur.jpg",
+            Image: "https://pbs.twimg.com/media/CA9i4giWYAAS7rF.png",
             Name: "Kebab Du Coin",
             Ville: "Strasbourg",
             Note: 5,
           },
         ],
+        Display: {
+            ToDisplay: false
+        }
       };
     },
   });
@@ -59,6 +61,11 @@
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     font-size: 35px;
+  }
+
+  h2{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
   }
   
   .Connexion {

@@ -2,7 +2,7 @@ interface Restaurant{
     Image: string,
     Name: string,
     Ville: string,
-    Note: Number,
+    Note: number,
 }
 
 export default Restaurant

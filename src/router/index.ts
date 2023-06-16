@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
 import HomeView from '../views/HomeView.vue'
+import UserProfilePage from '../views/UserProfilePage.vue'
 import Login from '../components/Login.vue'
 import Client from '../components/Client.vue'
 import Restaurant from '../components/Restaurant.vue'
@@ -42,6 +43,11 @@ const routes: Array<RouteConfig> = [
     path: '/register',
     name: 'register',
     component: Register
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: UserProfilePage
   },
   // {
   //   path: '/protected',

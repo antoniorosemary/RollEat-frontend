@@ -1,0 +1,92 @@
+<template>
+    <v-card
+      max-width="375"
+      class="mx-auto"
+    >
+      <v-img
+        src="https://cdn.vuetifyjs.com/images/lists/ali.png"
+        height="300px"
+        dark
+      >
+        <v-row class="fill-height">
+          <v-card-title>  
+            <v-spacer></v-spacer>
+  
+            <v-btn
+              dark
+              icon
+              class="mr-4"
+            >
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+
+          </v-card-title>
+  
+          <v-spacer></v-spacer>
+  
+          <v-card-title class="white--text pl-12 pt-12">
+            <div class="text-h4 pl-12 pt-12">
+              Ali Conners
+            </div>
+          </v-card-title>
+        </v-row>
+      </v-img>
+  
+      <v-list two-line>
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="indigo">
+              mdi-phone
+            </v-icon>
+          </v-list-item-icon>
+  
+          <v-list-item-content>
+            <v-list-item-title>(650) 555-1234</v-list-item-title>
+            <v-list-item-subtitle>Mobile</v-list-item-subtitle>
+          </v-list-item-content>
+  
+        </v-list-item>
+  
+        <v-divider inset></v-divider>
+  
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="indigo">
+              mdi-email
+            </v-icon>
+          </v-list-item-icon>
+  
+          <v-list-item-content>
+            <v-list-item-title>aliconnors@example.com</v-list-item-title>
+            <v-list-item-subtitle>Personal</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+  
+        <v-divider inset></v-divider>
+  
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon color="indigo">
+              mdi-map-marker
+            </v-icon>
+          </v-list-item-icon>
+  
+          <v-list-item-content>
+            <v-list-item-title>1400 Main Street</v-list-item-title>
+            <v-list-item-subtitle>Orlando, FL 79938</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-card>
+  </template>
+
+<script lang="ts">
+export default {
+components: {
+}
+}
+</script>
+
+<style>
+
+</style>

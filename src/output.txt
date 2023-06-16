@@ -1,0 +1,52 @@
+Structure du dossier pour le volume Windows-SSD
+Le numéro de série du volume est A03D-3774
+C:.
+¦   App.vue
+¦   colors.css
+¦   main.ts
+¦   output.txt
+¦   shims-vue.d.ts
+¦   shims-vuetify.d.ts
+¦   
++---assets
+¦       Logo outlined 128x128.png
+¦       Logo outlined 128x64.png
+¦       Logo outlined 64x64.png
+¦       logo.png
+¦       logo.svg
+¦       
++---components
+¦   ¦   Client.vue
+¦   ¦   HelloWorld.vue
+¦   ¦   HomePage.vue
+¦   ¦   Login.vue
+¦   ¦   Register.vue
+¦   ¦   ResponsiveLogo.vue
+¦   ¦   Restaurant.vue
+¦   ¦   UserButton.vue
+¦   ¦   
+¦   +---App
+¦   ¦       CustomFooter.vue
+¦   ¦       CustomHeader.vue
+¦   ¦       
+¦   +---Profiles
+¦           AdminProfile.vue
+¦           ClientProfile.vue
+¦           DeliveryProfile.vue
+¦           RestaurantProfile.vue
+¦           template_test.vue
+¦           
++---plugins
+¦       vuetify.ts
+¦       
++---router
+¦       index.ts
+¦       
++---store
+¦       index.ts
+¦       
++---views
+        AboutView.vue
+        HomeView.vue
+        UserProfilePage.vue
+        

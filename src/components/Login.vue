@@ -1,3 +1,5 @@
+
+
 <template>
   <v-container fluid class="d-flex justify-center align-center" style="height: 100vh;width: 100vw; background-image: linear-gradient(62deg, #DB995A 0%, #D6D4A0 100%);">
     
@@ -84,6 +86,9 @@ export default {
     return {
       email: '',
       password: '',
+      loginMessage: '',
+      emailErrors: [],
+      passwordErrors: [] // Note : les conventions pour les noms de propriétés en JavaScript favorisent généralement le camelCase, donc "passwordErrors" serait plus approprié.
     }
   },
   validations: {

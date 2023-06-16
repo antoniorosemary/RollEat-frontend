@@ -84,9 +84,9 @@ export default {
     loggedOut: true,
     userName: "jean valjean",
     userProfilePictureB64: undefined,
-    userRole: "client",
+    userRole: "delivery",
     expandMenu: false,
-    selectedItem: 0,
+    selectedItem: -1,
     userProfileHref: "/UserProfile"
   }},
   computed: {
@@ -102,9 +102,25 @@ export default {
       if(this.userRole === "restaurant")
         return [
           {
-            text: "Catalogue",
-            icon: "",
-            href: ""
+            text: "Mon Catalogue",
+            icon: "mdi-format-list-bulleted-type",
+            href: "/Catalogue"
+          },{
+            text: "Mes Commandes",
+            icon: "mdi-format-list-bulleted",
+            href: "/Commands"
+          },{
+            text: "Mes Statistiques",
+            icon: "mdi-chart-bar",
+            href: "/Stats"
+          }
+        ]
+        if(this.userRole === "delivery")
+        return [
+          {
+            text: "Livraisons",
+            icon: "mdi-package-variant",
+            href: "/delivery"
           }
         ]
       return []

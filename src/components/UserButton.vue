@@ -6,27 +6,125 @@
       </v-icon>
       Connexion
     </v-btn>
-    <v-btn v-else solid color="succes">
-      <v-icon v-if="userProfilePictureB64 == undefined" left>
-        mdi-account
-      </v-icon>
-      <v-img v-else left :src="'data:image/png;base64, '+userProfilePictureB64"/>
-      {{userName}}
-    </v-btn>
+    <v-menu v-else offset-y>
+      <template v-slot:activator="{ attrs, on }">
+        <v-btn 
+          solid 
+          color="succes" 
+          v-bind="attrs"
+          v-on="on"
+        >
+          <v-icon v-if="userProfilePictureB64 == undefined" left>
+            mdi-account
+          </v-icon>
+          <v-img v-else left :src="userProfilePicture"/>
+          Profile
+        </v-btn>
+      </template>
+
+      <v-list>
+        <v-list-item :href="userProfileHref">
+          <v-list-item-avatar>
+            <v-icon v-if="userProfilePictureB64 == undefined" left>
+              mdi-account
+            </v-icon>
+            <v-img v-else :src="userProfilePicture"/>
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title class="text-h6">
+              {{userName}}
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              Paramètres
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-divider/>
+
+      <v-list nav dense>
+        <v-list-item-group v-model="selectedItem">
+          <v-list-item 
+            v-for="(navOption, i) in navOptions" 
+            :key="i"
+            :href="navOption.href"
+          >
+            <v-list-item-icon>
+              <v-icon v-text="navOption.icon"/>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="navOption.text"/>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-menu>
   </div>
 </template>
   
 <script lang="ts">
+import ListItem from "../types/ListItem"
+
+interface UserButtonData {
+  loggedOut: boolean,
+  userName: string | undefined,
+  userProfilePictureB64: string | undefined,
+  userRole: string | undefined,
+  expandMenu: boolean,
+  selectedItem: number,
+  userProfileHref: string
+}
+
 export default {
   components: {},
-  data: () => {return {
+  data() : UserButtonData {return {
     loggedOut: true,
     userName: "jean valjean",
-    userProfilePictureB64: undefined
+    userProfilePictureB64: undefined,
+    userRole: "client",
+    expandMenu: false,
+    selectedItem: 0,
+    userProfileHref: "/UserProfile"
   }},
+  computed: {
+    navOptions(): Array<ListItem> {
+      if(this.userRole === "client")
+        return [
+          {
+            text: "Mes Commandes",
+            icon: "mdi-format-list-bulleted",
+            href: "/Commands"
+          }
+        ]
+      if(this.userRole === "restaurant")
+        return [
+          {
+            text: "Catalogue",
+            icon: "",
+            href: ""
+          }
+        ]
+      return []
+    },
+    userProfilePicture(): string {
+      if(this.userProfilePictureB64 === undefined)
+        return ""
+      return this.B64ImgToSrc(this.userProfilePictureB64);
+    }
+  },
   methods:{
     GoToLogin() {
-      window.location.href = /*process.env.BASE_URL*/"http://localhost:8080"+"/login"
+      this.loggedOut = !this.loggedOut;
+      //window.location.href = "/login"
+    },
+    ToggleMenu() {
+      this.expandMenu = !this.expandMenu;
+    },
+    B64ImgToSrc(b64Img : string): string {
+      return 'data:image/png;base64, '+b64Img;
     }
   }
 }

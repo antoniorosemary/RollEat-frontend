@@ -244,12 +244,27 @@ const passwordHasSpecialChar = helpers.withParams(
   (value :string) => /[!@#$%^&*]/.test(value)
 )
 
-const submitForm = async (formData : any) : Promise<void> => {
+const submitForm = async (formData : any, loginMessage : any) : Promise<boolean> => {
   try {
-    const response = await axios.post('API_URL', formData);
-    console.log(response.data);
+    var res = await axios.post('http://localhost:3000/register', { formData })
+        //.then(response => {
+          if (res.status != 200){
+            console.log(res.data);
+          // Traitez la réponse de l'API Gateway ici
+          loginMessage = 'Création du compte réussi!';
+          return true;
+          }
+          
+        //})
+        //.catch(error => {
+          console.error(res);
+          // Traitez les erreurs ici
+          loginMessage = 'Identifiant ou mot de passe incorrect !';
+          return false;
+        //});
   } catch (error) {
     console.error(error);
+    return false;
   }
 }
 
@@ -273,7 +288,7 @@ export default Vue.extend({
       selectedOption: null,
       affiliation: '',
       options: ['client', 'restaurant', 'livreur'],
-      // ...
+      registerMessage: '',
     }
   },
   validations: {
@@ -409,8 +424,23 @@ export default Vue.extend({
         dateOfBirth: this.dateOfBirth,
         role: this.selectedOption,
         affiliationCode: this.affiliation,
-      }
-        submitForm(formData);
+        }
+        var registerMessage = this.registerMessage
+        //submitForm(formData,loginMessage).then((value) => {if (value) this.$router.push('/restaurant'); });
+        // var res = await axios.post('http://localhost:3000/register', { formData })
+
+        axios.post('http://localhost:3000/register', {  formData  })
+          .then(response => {
+            console.log(response.data);
+            // Traitez la réponse de l'API Gateway ici
+           // registerMessage = 'Utilisateur enregistré!';
+            this.$router.push('/login'); // Redirection vers la page d'accueil
+          })
+          .catch(error => {
+            console.error(error);
+            // Traitez les erreurs ici
+           // registerMessage = 'Identifiant ou mot de passe incorrect !';
+          });  
       }
     },
 

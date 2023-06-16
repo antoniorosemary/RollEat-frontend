@@ -42,6 +42,15 @@
             color="#654236ff"
           ></v-text-field>
         </v-form>
+        <v-alert
+      outlined
+      type="warning"
+      prominent
+      border="left"
+      v-if="loginMessage"
+      >
+    {{ loginMessage }}  
+    </v-alert>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -49,6 +58,7 @@
           Se connecter
         </v-btn>
       </v-card-actions>
+
     </v-card>
 
   </v-container>
@@ -89,6 +99,7 @@ const passwordHasSpecialChar = helpers.withParams(
   {type: 'contains'},
   (value :string) => /[!@#$%^&*]/.test(value)
 )
+
 export default Vue.extend({
   mixins: [validationMixin],
   data() {
@@ -104,9 +115,9 @@ export default Vue.extend({
       required,
       passwordMinLength,
       passwordHasUppercase,
-      passwordHasLowercase,
-      passwordHasDigit,
-      passwordHasSpecialChar
+     passwordHasLowercase,
+     passwordHasDigit,
+     passwordHasSpecialChar
     },
   },
   computed: {
@@ -134,21 +145,20 @@ export default Vue.extend({
   },
 
   methods: {
-    async submitForm() {
-      if (!this.$v.$invalid) {
-        const formData = {
-          email: this.email,
-          password: this.password,
-        };
-
-        try {
-          const response = await axios.post('API_URL', formData);
+    submitForm() {
+      axios.post('http://localhost:3000/login', { username: this.email, password: this.password })
+        .then(response => {
           console.log(response.data);
-        } catch (error) {
+          // Traitez la réponse de l'API Gateway ici
+          this.loginMessage = 'Connexion réussie!';
+          this.$router.push('/restaurant'); // Redirection vers la page d'accueil
+        })
+        .catch(error => {
           console.error(error);
-        }
-      }
-    },
+          // Traitez les erreurs ici
+          this.loginMessage = 'Identifiant ou mot de passe incorrect !';
+        });
+    }
   }
 })
 

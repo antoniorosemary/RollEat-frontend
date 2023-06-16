@@ -8,7 +8,7 @@
       </v-card-title>
       <v-card-subtitle>
         Vous avez déja un compte ? 
-        <a href="/login">
+        <a :href="hrefLogin">
           connectez vous
         </a>
       </v-card-subtitle>
@@ -201,46 +201,59 @@
 <style>
 </style>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import { mapState } from 'vuex';
 import { required, maxLength, email, helpers, sameAs } from 'vuelidate/lib/validators';
 import axios from 'axios';
 import { validationMixin } from 'vuelidate'
 
 const passwordMinLength = helpers.withParams(
-  { min: 8 },
-  value => value.length >= 8
+  { 
+    type: 'contains',
+    min: 8 
+  },
+  (value :string) => value.length >= 8
 )
 
 
 const numeric = helpers.regex('numeric', /^[0-9]*$/)
 
 const phoneFormat = helpers.withParams(
-  {},
-  value => /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?[-\s\.]?[0-9]{1,4}[-\s\.]?[0-9]{1,9}$/im.test(value)
+  {type: 'contains'},
+  (value :string) => /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?[-\s\.]?[0-9]{1,4}[-\s\.]?[0-9]{1,9}$/im.test(value)
 )
 
 const passwordHasUppercase = helpers.withParams(
-  {},
-  value => /[A-Z]/.test(value)
+  {type: 'contains'},
+  (value :string) => /[A-Z]/.test(value)
 )
 
 const passwordHasLowercase = helpers.withParams(
-  {},
-  value => /[a-z]/.test(value)
+  {type: 'contains'},
+  (value :string) => /[a-z]/.test(value)
 )
 
 const passwordHasDigit = helpers.withParams(
-  {},
-  value => /\d/.test(value)
+  {type: 'contains'},
+  (value :string) => /\d/.test(value)
 )
 
 const passwordHasSpecialChar = helpers.withParams(
-  {},
-  value => /[!@#$%^&*]/.test(value)
+  {type: 'contains'},
+  (value :string) => /[!@#$%^&*]/.test(value)
 )
 
+const submitForm = async (formData : any) : Promise<void> => {
+  try {
+    const response = await axios.post('API_URL', formData);
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-export default {
+export default Vue.extend({
   mixins: [validationMixin],
   data() {
     return {
@@ -286,31 +299,34 @@ export default {
     confirmPassword: {sameAsPassword: sameAs('password')},
   },
   computed: {
+    ...mapState([
+      'hrefLogin'
+    ]),
     progress() {
       return this.step * 33.33;
     },
     firstNameErrors () {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.firstName.$dirty) return errors
       !this.$v.firstName.required && errors.push('First name is required.')
       !this.$v.firstName.maxLength && errors.push('firstName must be at most 50 characters long')
       return errors
     },
     lastNameErrors () {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.lastName.$dirty) return errors
       !this.$v.lastName.required && errors.push('Last name is required.')
       !this.$v.firstName.maxLength && errors.push('LastName must be at most 50 characters long')
       return errors
     },
     selectedOptionErrors() {
-      const errors = [];
+      const errors : Array<string> = [];
       if (!this.$v.selectedOption.$dirty) return errors;
       !this.$v.selectedOption.required && errors.push('Veuillez sélectionner une option.');
       return errors;
     },
     phoneErrors () {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.phone.$dirty) return errors
       !this.$v.phone.required && errors.push('Phone number is required.')
       !this.$v.phone.phoneFormat && errors.push('Invalid phone number format.')
@@ -318,39 +334,39 @@ export default {
       return errors
     },
     addressErrors () {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.address.$dirty) return errors
       !this.$v.address.required && errors.push('Address is required.')
       return errors
     },
     countryErrors () {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.country.$dirty) return errors
       !this.$v.country.required && errors.push('Country is required.')
       return errors
     },
     cityErrors () {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.city.$dirty) return errors
       !this.$v.city.required && errors.push('City is required.')
       return errors
     },
     postalCodeErrors () {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.postalCode.$dirty) return errors
       !this.$v.postalCode.required && errors.push('Postal code is required.')
       !this.$v.postalCode.numeric && errors.push('Postal code must be numeric.')
       return errors
     },
     emailErrors () {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.email.$dirty) return errors
       !this.$v.email.email && errors.push('Must be a valid e-mail')
       !this.$v.email.required && errors.push('E-mail is required')
       return errors
     },
     passwordErrors () {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.password.$dirty) return errors
       !this.$v.password.required && errors.push('Password is required.')
       !this.$v.password.passwordMinLength && errors.push('Password must be at least 8 characters long.')
@@ -361,36 +377,26 @@ export default {
       return errors
     },
     dateOfBirthErrors () {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.dateOfBirth.$dirty) return errors
       !this.$v.dateOfBirth.required && errors.push('Date of birth is required.')
       return errors
     },
     confirmPasswordErrors() {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.confirmPassword.$dirty) return errors
       !this.$v.confirmPassword.sameAsPassword && errors.push('Password confirmation does not match.')
       return errors
     },
   },
   methods: {
-    nextStep() {
+    nextStep() : void{
       if (this.step === 1 && !this.$v.email.$invalid && !this.$v.password.$invalid && !this.$v.selectedOption.$invalid) {
         this.step++
       } else if (this.step === 2 && !this.$v.firstName.$invalid && !this.$v.lastName.$invalid && !this.$v.phone.$invalid && !this.$v.dateOfBirth.$invalid) {
         this.step++
       } else if (this.step === 3 && !this.$v.$invalid) {
-        this.submitForm();
-      }
-    },
-
-    previousStep() {
-      if (this.step > 1) {
-        this.step--
-      }
-    },
-    async submitForm() {
-      const formData = {
+        const formData = {
         firstName: this.firstName,
         lastName: this.lastName,
         phone: this.phone,
@@ -403,16 +409,17 @@ export default {
         dateOfBirth: this.dateOfBirth,
         role: this.selectedOption,
         affiliationCode: this.affiliation,
-      };
+      }
+        submitForm(formData);
+      }
+    },
 
-      try {
-        const response = await axios.post('API_URL', formData);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
+    previousStep() : void{
+      if (this.step > 1) {
+        this.step--
       }
     },
     // ...
   }
-}
+})
 </script>

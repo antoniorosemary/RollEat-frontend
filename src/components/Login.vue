@@ -8,10 +8,13 @@
         Connexion
       </v-card-title>
       <v-card-subtitle>
-        Vous n'avez pas encore de compte ? 
-        <a href="/register">
-          créer un compte
-        </a>
+        Vous n'avez pas encore de compte ?
+        
+          <router-link :to="hrefRegister">
+            <a>
+              créer un compte
+            </a>
+          </router-link>
       </v-card-subtitle>
 
       <v-card-text>
@@ -51,44 +54,48 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import { required, email, helpers } from 'vuelidate/lib/validators';
 import axios from 'axios';
-import { validationMixin } from 'vuelidate'
+
+import { mapState } from 'vuex';
+import {validationMixin} from 'vuelidate';
 
 const passwordMinLength = helpers.withParams(
-  { min: 8 },
-  value => value.length >= 8
+  { 
+    type: 'contains',
+    min: 8 
+  },
+  (value :string) => value.length >= 8
 )
 
 const passwordHasUppercase = helpers.withParams(
-  {},
-  value => /[A-Z]/.test(value)
+  {type: 'contains'},
+  (value :string) => /[A-Z]/.test(value)
 )
 
 const passwordHasLowercase = helpers.withParams(
-  {},
-  value => /[a-z]/.test(value)
+  {type: 'contains'},
+  (value :string) => /[a-z]/.test(value)
 )
 
 const passwordHasDigit = helpers.withParams(
-  {},
-  value => /\d/.test(value)
+  {type: 'contains'},
+  (value :string) => /\d/.test(value)
 )
 
 const passwordHasSpecialChar = helpers.withParams(
-  {},
-  value => /[!@#$%^&*]/.test(value)
-) 
-export default {
+  {type: 'contains'},
+  (value :string) => /[!@#$%^&*]/.test(value)
+)
+export default Vue.extend({
   mixins: [validationMixin],
   data() {
     return {
       email: '',
       password: '',
       loginMessage: '',
-      emailErrors: [],
-      passwordErrors: [] // Note : les conventions pour les noms de propriétés en JavaScript favorisent généralement le camelCase, donc "passwordErrors" serait plus approprié.
     }
   },
   validations: {
@@ -103,15 +110,18 @@ export default {
     },
   },
   computed: {
+    ...mapState([
+      'hrefRegister'
+    ]),
     emailErrors () {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.email.$dirty) return errors
       !this.$v.email.email && errors.push('Must be a valid e-mail')
       !this.$v.email.required && errors.push('E-mail is required')
       return errors
     },
     passwordErrors () {
-      const errors = []
+      const errors : Array<string> = []
       if (!this.$v.password.$dirty) return errors
       !this.$v.password.required && errors.push('Password is required.')
       !this.$v.password.passwordMinLength && errors.push('Password must be at least 8 characters long.')
@@ -122,6 +132,7 @@ export default {
       return errors
     },
   },
+
   methods: {
     async submitForm() {
       if (!this.$v.$invalid) {
@@ -139,7 +150,8 @@ export default {
       }
     },
   }
-}
+})
+
 </script>
 
 <style>

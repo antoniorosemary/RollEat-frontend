@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
+import store from '../store/index'
 
 import HomeView from '../views/HomeView.vue'
 import Login from '../components/Login.vue'
@@ -11,12 +12,12 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
+    path: store.state.hrefHome,
     name: 'home',
     component: HomeView
   },
   {
-    path: '/about',
+    path: store.state.hrefAbout,
     name: 'about',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -24,22 +25,22 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/login',
+    path: store.state.hrefLogin,
     name: 'login',
     component: Login
   },
-  {
+  /*{
     path: '/client',
     name: 'client',
     component: Client
-  },
-  {
+  },*/
+  /*{
     path: '/restaurant',
     name: 'restaurant',
     component: Restaurant
-  },
+  },*/
   {
-    path: '/register',
+    path: store.state.hrefRegister,
     name: 'register',
     component: Register
   },

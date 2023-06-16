@@ -4,6 +4,23 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    state: {
+        loggedOut: true,
+        userName: null,
+        userProfilePictureB64: null,
+        userRole: "client",
+
+        hrefHome: "/",
+        hrefAbout: "/about",
+        hrefProfile: "/profile",
+        hrefLogin: "/login",
+        hrefRegister: "/register",
+        hrefCommands: "/commands",
+        hrefCatalogue: "/catalogue",
+        hrefStats: "/stats",
+        hrefDelivery: "/delivery"
+        
+    }
     // state: {
     //     status: '',
     //     user: user,

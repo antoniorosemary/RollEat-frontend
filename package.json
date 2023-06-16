@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@mdi/font": "^7.2.96",
+    "@types/vuelidate": "^0.7.18",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-typescript": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",

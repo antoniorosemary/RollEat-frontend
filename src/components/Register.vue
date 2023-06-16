@@ -188,38 +188,49 @@ import axios from 'axios';
 import { validationMixin } from 'vuelidate'
 
 const passwordMinLength = helpers.withParams(
-  { min: 8 },
-  value => value.length >= 8
+  { 
+    type: 'contains',
+    min: 8 
+  },
+  (value :string) => value.length >= 8
 )
 
 
 const numeric = helpers.regex('numeric', /^[0-9]*$/)
 
 const phoneFormat = helpers.withParams(
-  {},
-  value => /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?[-\s\.]?[0-9]{1,4}[-\s\.]?[0-9]{1,9}$/im.test(value)
+  {type: 'contains'},
+  (value :string) => /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?[-\s\.]?[0-9]{1,4}[-\s\.]?[0-9]{1,9}$/im.test(value)
 )
 
 const passwordHasUppercase = helpers.withParams(
-  {},
-  value => /[A-Z]/.test(value)
+  {type: 'contains'},
+  (value :string) => /[A-Z]/.test(value)
 )
 
 const passwordHasLowercase = helpers.withParams(
-  {},
-  value => /[a-z]/.test(value)
+  {type: 'contains'},
+  (value :string) => /[a-z]/.test(value)
 )
 
 const passwordHasDigit = helpers.withParams(
-  {},
-  value => /\d/.test(value)
+  {type: 'contains'},
+  (value :string) => /\d/.test(value)
 )
 
 const passwordHasSpecialChar = helpers.withParams(
-  {},
-  value => /[!@#$%^&*]/.test(value)
+  {type: 'contains'},
+  (value :string) => /[!@#$%^&*]/.test(value)
 )
 
+const submitForm = async (formData : any) : Promise<void> => {
+  try {
+    const response = await axios.post('API_URL', formData);
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export default Vue.extend({
   mixins: [validationMixin],
@@ -347,23 +358,13 @@ export default Vue.extend({
     },
   },
   methods: {
-    nextStep() {
+    nextStep() : void{
       if (this.step === 1 && !this.$v.email.$invalid && !this.$v.password.$invalid) {
         this.step++
       } else if (this.step === 2 && !this.$v.firstName.$invalid && !this.$v.lastName.$invalid && !this.$v.phone.$invalid && !this.$v.dateOfBirth.$invalid) {
         this.step++
       } else if (this.step === 3 && !this.$v.$invalid) {
-        this.submitForm();
-      }
-    },
-
-    previousStep() {
-      if (this.step > 1) {
-        this.step--
-      }
-    },
-    async submitForm() {
-      const formData = {
+        const formData = {
         firstName: this.firstName,
         lastName: this.lastName,
         phone: this.phone,
@@ -374,13 +375,14 @@ export default Vue.extend({
         email: this.email,
         password: this.password,
         dateOfBirth: this.dateOfBirth,
-      };
+      }
+        submitForm(formData);
+      }
+    },
 
-      try {
-        const response = await axios.post('API_URL', formData);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
+    previousStep() : void{
+      if (this.step > 1) {
+        this.step--
       }
     },
     // ...

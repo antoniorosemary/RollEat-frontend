@@ -66,7 +66,7 @@
   </template>
     
   <script lang="ts">
-  import ListItem from "../types/ListItem"
+  import ListItem from "../Types/ListItem";
   
   interface UserButtonData {
     loggedOut: boolean,

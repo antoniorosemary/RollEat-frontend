@@ -426,7 +426,7 @@ export default Vue.extend({
       if (this.step === 1 
         && !this.$v.email.$invalid 
         && !this.$v.password.$invalid 
-        && !this.$v.selectedOption.$invalid
+        && !this.$v.roleSelected.$invalid
       )
         this.step = 2
       else if (this.step === 2 
@@ -455,17 +455,17 @@ export default Vue.extend({
       }
     },
     submitForm(formData : any) {
-      axios.post('http://localhost:3000/register', formData)
+      axios.post('/register', formData)
         .then(response => {
           console.log(response.data);
           // Traitez la réponse de l'API Gateway ici
-          this.registerMessage = 'Connexion réussie!';
+          this.registerMessage = 'Création du compte réussie!';
           this.$router.push('/restaurant'); // Redirection vers la page d'accueil
         })
         .catch(error => {
           console.error(error);
           // Traitez les erreurs ici
-          this.registerMessage = 'Identifiant ou mot de passe incorrect !';
+          this.registerMessage = 'Création du compte interrompue !';
         });
     }
   }

@@ -8,7 +8,7 @@
       </v-card-title>
       <v-card-subtitle>
         Vous n'avez pas encore de compte ?
-        <router-link to="/register">
+        <router-link :to="hrefRegister">
           créer un compte
         </router-link>
       </v-card-subtitle>
@@ -51,12 +51,14 @@
 </template>
 
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import axios from 'axios';
+import {mapState} from 'vuex'
 
-export default {
+export default Vue.extend({
   name: 'Login',
-  data: function () {
+  data() {
     return {
       email: '',
       password: '',
@@ -65,7 +67,11 @@ export default {
       passwordErrors: [] // Note : les conventions pour les noms de propriétés en JavaScript favorisent généralement le camelCase, donc "passwordErrors" serait plus approprié.
     }
   },
-
+  computed: {
+    ...mapState([
+      'hrefRegister'
+    ])
+  },
   methods: {
     loginUser() {
       axios.post('http://localhost:3000/login', { username: this.email, password: this.password })
@@ -82,6 +88,6 @@ export default {
         });
     }
   }
-}
+})
 
 </script>

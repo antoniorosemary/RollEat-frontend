@@ -23,7 +23,7 @@
       </template>
 
       <v-list>
-        <v-list-item :href="userProfileHref">
+        <v-list-item :href="hrefProfile">
           <v-list-item-avatar>
             <v-icon v-if="userProfilePictureB64 == undefined" left>
               mdi-account
@@ -67,36 +67,41 @@
   
 <script lang="ts">
 import ListItem from "../types/ListItem"
+import { mapState } from "vuex"
+import Vue from 'vue'
 
 interface UserButtonData {
-  loggedOut: boolean,
-  userName: string | undefined,
-  userProfilePictureB64: string | undefined,
-  userRole: string | undefined,
   expandMenu: boolean,
   selectedItem: number,
-  userProfileHref: string
 }
 
-export default {
+export default Vue.extend({
   components: {},
   data() : UserButtonData {return {
-    loggedOut: true,
-    userName: "jean valjean",
-    userProfilePictureB64: undefined,
-    userRole: "delivery",
     expandMenu: false,
     selectedItem: -1,
-    userProfileHref: "/UserProfile"
   }},
   computed: {
+    ...mapState([
+      'loggedOut',
+      'userName',
+      'userProfilePictureB64',
+      'userRole',
+
+      'hrefProfile',
+      'hrefCommands',
+      'hrefCatalogue',
+      'hrefStats',
+      'hrefDelivery',
+      'hrefLogin'
+    ]),
     navOptions(): Array<ListItem> {
       if(this.userRole === "client")
         return [
           {
             text: "Mes Commandes",
             icon: "mdi-format-list-bulleted",
-            href: "/Commands"
+            href: this.hrefCommands
           }
         ]
       if(this.userRole === "restaurant")
@@ -104,15 +109,15 @@ export default {
           {
             text: "Mon Catalogue",
             icon: "mdi-format-list-bulleted-type",
-            href: "/Catalogue"
+            href: this.hrefCatalogue
           },{
             text: "Mes Commandes",
             icon: "mdi-format-list-bulleted",
-            href: "/Commands"
+            href: this.hrefCommands
           },{
             text: "Mes Statistiques",
             icon: "mdi-chart-bar",
-            href: "/Stats"
+            href: this.hrefStats
           }
         ]
         if(this.userRole === "delivery")
@@ -120,21 +125,21 @@ export default {
           {
             text: "Livraisons",
             icon: "mdi-package-variant",
-            href: "/delivery"
+            href: this.hrefDelivery
           }
         ]
       return []
     },
     userProfilePicture(): string {
-      if(this.userProfilePictureB64 === undefined)
+      if(this.userProfilePictureB64 === null)
         return ""
       return this.B64ImgToSrc(this.userProfilePictureB64);
     }
   },
   methods:{
     GoToLogin() {
-      this.loggedOut = !this.loggedOut;
-      //window.location.href = "/login"
+      //this.loggedOut = !this.loggedOut;
+      window.location.href = this.hrefLogin;
     },
     ToggleMenu() {
       this.expandMenu = !this.expandMenu;
@@ -143,7 +148,7 @@ export default {
       return 'data:image/png;base64, '+b64Img;
     }
   }
-}
+})
 </script>
 
 <style>

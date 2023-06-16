@@ -16,18 +16,26 @@
         <v-col class="col-auto container mr-sm-10 mr-n16">
           <v-row no-gutters>
             <v-col class="col-12 footer-link" sm="6">
-              <a>Nous contacter</a>
+              <router-link :to="hrefContactUs">
+                <a>Nous contacter</a>
+              </router-link>
             </v-col>
             <v-col class="col-12 footer-link" sm="6">
-              <a>Devenir Livreur</a>
+              <router-link :to="hrefBecomeDelivery">
+                <a>Devenir Livreur</a>
+              </router-link>
             </v-col>
           </v-row>
           <v-row no-gutters>
             <v-col class="col-12 footer-link" sm="6">
-              <a>A propos de Roll Eat</a>
+              <router-link :to="hrefAboutUs">
+                <a>A propos de Roll Eat</a>
+              </router-link>
             </v-col>
             <v-col class="col-12 footer-link" sm="6">
-              <a>Ajouter votre restaurant</a>
+              <router-link :to="hrefAddRestaurant">
+                <a>Ajouter votre restaurant</a>
+              </router-link>
             </v-col>
           </v-row>
         </v-col>
@@ -38,9 +46,19 @@
   
 <script lang="ts">
 import ResponsiveLogo from '../ResponsiveLogo.vue';
+import { mapState } from 'vuex';
+
 export default {
   components: {
     ResponsiveLogo
+  },
+  computed: {
+    ...mapState([
+      'hrefContactUs',
+      'hrefBecomeDelivery',
+      'hrefAboutUs',
+      'hrefAddRestaurant'
+    ])
   }
 }
 </script>

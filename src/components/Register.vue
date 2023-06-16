@@ -8,9 +8,12 @@
       </v-card-title>
       <v-card-subtitle>
         Vous avez déja un compte ? 
-        <a :href="hrefLogin">
-          connectez vous
-        </a>
+        <router-link :to="hrefLogin">
+          <a>
+            connectez vous
+          </a>
+        </router-link>
+        
       </v-card-subtitle>
 
       <v-card-text>

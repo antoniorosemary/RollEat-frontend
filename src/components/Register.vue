@@ -274,8 +274,8 @@ export default Vue.extend({
       email: '',
       password: '',
       confirmPassword: '',
-      roleSelected: null,
-      roleOptions: ['client', 'restaurant', 'livreur'],
+      roleSelected: 'client',
+      roleOptions: ['client', 'restaurateur', 'livreur'],
       
       // step === 2
       firstName: '',
@@ -448,14 +448,15 @@ export default Vue.extend({
           email: this.email,
           password: this.password,
           dateOfBirth: this.dateOfBirth,
-          role: this.selectedOption,
+          //role: this.roleSelected,
           affiliationCode: this.affiliation,
         }
         this.submitForm(formData);
       }
     },
     submitForm(formData : any) {
-      axios.post('/register', formData)
+      const endpoint_register = '/register/' + this.roleSelected;
+      axios.post(endpoint_register, formData)
         .then(response => {
           console.log(response.data);
           // Traitez la réponse de l'API Gateway ici

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import store from '../store/index'
+import axios from 'axios'
 
 import HomeView from '../views/HomeView.vue'
 import Login from '../components/Login.vue'
@@ -22,7 +23,8 @@ const routes: Array<RouteConfig> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: store.state.hrefLogin,
@@ -63,5 +65,25 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach(async (to, from, next) => {
+  const isAuthenticated = await checkAuthentication();
+
+  if (to.meta && to.meta.requiresAuth && !isAuthenticated) {
+    next('/login');
+  } else {
+    next();
+  }
+});
+
+async function checkAuthentication() {
+  try {
+    const response = await axios.post('/auth');
+    return response.status === 200;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
 
 export default router

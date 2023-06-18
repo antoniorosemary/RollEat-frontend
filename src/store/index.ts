@@ -24,7 +24,12 @@ export default new Vuex.Store({
     hrefAboutUs: "/aboutus",
     hrefAddRestaurant: "/addRestaurant"
     
-  }
+  },
+   mutations: {
+    setLoggedOut(state, loggedOut) {
+      state.loggedOut = loggedOut;
+    }
+  },
 // state: {
 //     status: '',
 //     user: user,

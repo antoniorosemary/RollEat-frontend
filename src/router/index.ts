@@ -69,6 +69,12 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
   const isAuthenticated = await checkAuthentication();
 
+  if (isAuthenticated) {
+    store.commit('setLoggedOut', false); // Modifie l'état loggedOut à false si l'utilisateur est authentifié
+  } else {
+    store.commit('setLoggedOut', true); // Sinon, il est défini à true
+  }
+
   if (to.meta && to.meta.requiresAuth && !isAuthenticated) {
     next('/login');
   } else {

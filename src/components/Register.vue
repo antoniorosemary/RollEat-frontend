@@ -311,7 +311,8 @@ export default Vue.extend({
     lastName: { required, maxLength: maxLength(50) },
     phone: { required, phoneFormat },
     dateOfBirth: { required },
-
+    affiliation: { maxLength: maxLength(50) },  
+    
     // step === 3
     address: { required },
     country: { required },
@@ -456,7 +457,7 @@ export default Vue.extend({
     },
     submitForm(formData : any) {
       const endpoint_register = '/register/' + this.roleSelected;
-      axios.post(endpoint_register, formData)
+      axios.post(endpoint_register, formData, {withCredentials: true})
         .then(response => {
           console.log(response.data);
           // Traitez la réponse de l'API Gateway ici

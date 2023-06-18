@@ -146,7 +146,7 @@ export default Vue.extend({
 
   methods: {
     submitForm() {
-      axios.post('/login', { username: this.email, password: this.password })
+      axios.post('/login', { username: this.email, password: this.password }, { withCredentials: true })
         .then(response => {
           console.log(response.data);
           // Traitez la réponse de l'API Gateway ici

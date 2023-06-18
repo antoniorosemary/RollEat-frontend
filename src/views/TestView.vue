@@ -28,6 +28,15 @@
             Name: "Kebab Du Seigneur",
             Ville: "Strasbourg",
             Note: 4.6,
+            Horraires:{
+              Monday: "12:00-14:00, 17:00-22:00",
+              Tuesday: "12:00-14:00, 17:00-22:00",
+              Wednesday: "12:00-14:00, 17:00-22:00",
+              Thursday: "12:00-14:00, 17:00-22:00",
+              Friday: "12:00-14:00, 17:00-22:00",
+              Saturday: "12:00-14:00, 17:00-22:00",
+              Sunday: "12:00-14:00, 17:00-22:00",
+            },
             Carte:[
               {
                 Image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Kebab.JPG/1200px-Kebab.JPG",
@@ -72,6 +81,15 @@
             Name: "McDounald",
             Ville: "Ouganda",
             Note: 12,
+            Horraires:{
+              Monday: "12:00-14:00, 17:00-22:00",
+              Tuesday: "12:00-14:00, 17:00-22:00",
+              Wednesday: "12:00-14:00, 17:00-22:00",
+              Thursday: "12:00-14:00, 17:00-22:00",
+              Friday: "12:00-14:00, 17:00-22:00",
+              Saturday: "12:00-14:00, 17:00-22:00",
+              Sunday: "12:00-14:00, 17:00-22:00",
+            },
             Carte:[]
           },
           {
@@ -79,6 +97,15 @@
             Name: "Kebab Whalla",
             Ville: "Ostwald",
             Note: 3.2,
+            Horraires:{
+              Monday: "12:00-14:00, 17:00-22:00",
+              Tuesday: "12:00-14:00, 17:00-22:00",
+              Wednesday: "12:00-14:00, 17:00-22:00",
+              Thursday: "12:00-14:00, 17:00-22:00",
+              Friday: "12:00-14:00, 17:00-22:00",
+              Saturday: "12:00-14:00, 17:00-22:00",
+              Sunday: "12:00-14:00, 17:00-22:00",
+            },
             Carte:[]
           },
           {
@@ -86,6 +113,15 @@
             Name: "Kebab Du Coin",
             Ville: "Strasbourg",
             Note: 5,
+            Horraires:{
+              Monday: "12:00-14:00, 17:00-22:00",
+              Tuesday: "12:00-14:00, 17:00-22:00",
+              Wednesday: "12:00-14:00, 17:00-22:00",
+              Thursday: "12:00-14:00, 17:00-22:00",
+              Friday: "12:00-14:00, 17:00-22:00",
+              Saturday: "12:00-14:00, 17:00-22:00",
+              Sunday: "12:00-14:00, 17:00-22:00",
+            },
             Carte:[]
           },
         ],

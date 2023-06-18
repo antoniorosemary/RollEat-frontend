@@ -2,7 +2,7 @@ interface ItemMenu{
     Image: string,
     Name: string,
     Details: string,
-    prix: number,
+    Prix: number,
 }
 
 export default ItemMenu

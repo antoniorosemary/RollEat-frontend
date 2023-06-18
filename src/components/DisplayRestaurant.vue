@@ -43,13 +43,43 @@
                   <v-card-subtitle>
                       {{RestaurantToDetail.Ville}}
                   </v-card-subtitle>
+                  <table>
+                    <tr>
+                      <td>Lundi :</td>
+                      <td>{{RestaurantToDetail.Horraires.Monday}}</td>
+                    </tr>
+                    <tr>
+                      <td>Mardi :</td>
+                      <td>{{RestaurantToDetail.Horraires.Tuesday}}</td>
+                    </tr>
+                    <tr>
+                      <td>Mercredi :</td>
+                      <td>{{RestaurantToDetail.Horraires.Wednesday}}</td>
+                    </tr>
+                    <tr>
+                      <td>Jeudi :</td>
+                      <td>{{RestaurantToDetail.Horraires.Thursday}}</td>
+                    </tr>
+                    <tr>
+                      <td>Vendredi :</td>
+                      <td>{{RestaurantToDetail.Horraires.Friday}}</td>
+                    </tr>
+                    <tr>
+                      <td>Samedi :</td>
+                      <td>{{RestaurantToDetail.Horraires.Saturday}}</td>
+                    </tr>
+                    <tr>
+                      <td>Dimance :</td>
+                      <td>{{RestaurantToDetail.Horraires.Sunday}}</td>
+                    </tr>
+                  </table>
                   </v-card-text>
 
               </v-card>
             </v-col>
             <v-col lg="auto">
               <v-card
-                class="DisplayRestaurant"
+                class="DisplayRestaurantInside"
                 max-width="550"
                 max-height="600"
               > 
@@ -67,6 +97,8 @@
                           </v-list-item-title>
                           <v-list-item-text>
                             {{ Item.Details }}
+                            <br>
+                            <bold class="font-weight-black">{{ Item.Prix }} €</bold>
                           </v-list-item-text>
                         </div>
                         <div>
@@ -82,27 +114,6 @@
                       <v-divider></v-divider>
                     </template>
                   </v-list>
-                            <!--
-                  <v-card v-for="Item in RestaurantToDetail.Carte">
-                    <div class="d-flex flex-no-wrap justify-space-between">
-                      <div>
-                        <v-card-title>
-                          {{ Item.Name }}
-                        </v-card-title>
-                        <v-card-subtitle>
-                          {{ Item.Details }}
-                        </v-card-subtitle>
-                      </div>
-                      <v-avatar
-                      class="ma-3"
-                      size="125"
-                      tile
-                      >
-                        <v-img :src="Item.Image"></v-img>
-                      </v-avatar>
-                    </div>
-                  </v-card>
-                -->
                 </v-card-text>
               </v-card>
             </v-col>
@@ -165,7 +176,6 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Restaurant from '../Types/Restaurant';
-import ItemMenu from '../Types/ItemMenu';
 import type { PropType } from "vue";
 
 interface DisplayRestaurantData {
@@ -191,7 +201,16 @@ export default Vue.extend({
         Name: "Test",
         Ville: "",
         Note: 0,
-        Carte: []
+        Horraires: {
+          Monday: "",
+          Tuesday: "",
+          Wednesday: "",
+          Thursday: "",
+          Friday: "",
+          Saturday: "",
+          Sunday: "",
+        },
+        Carte: [],
       }
     };
   },

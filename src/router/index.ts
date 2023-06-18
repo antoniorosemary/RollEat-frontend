@@ -76,7 +76,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (to.meta && to.meta.requiresAuth && !isAuthenticated) {
-    next('/login');
+    next(store.state.hrefLogin);
   } else {
     next();
   }

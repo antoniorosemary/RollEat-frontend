@@ -438,28 +438,41 @@ export default Vue.extend({
       )
         this.step = 3
       else if (this.step === 3 && !this.$v.$invalid) {
-        const formData = {
+        const formDataUser = {
           firstName: this.firstName,
           lastName: this.lastName,
           phone: this.phone,
+          email: this.email,
+          password: this.password,
+          dateOfBirth: this.dateOfBirth,
+          affiliationCode: this.affiliation,
+        }
+        const formDataAddress = {
+          addressName : 'Main address', // TODO: à changer pour 'Main address
           address: this.address,
           country: this.country,
           city: this.city,
           postalCode: this.postalCode,
-          email: this.email,
-          password: this.password,
-          dateOfBirth: this.dateOfBirth,
-          //role: this.roleSelected,
-          affiliationCode: this.affiliation,
         }
-        this.submitForm(formData);
+        this.submitForm(formDataUser, formDataAddress);
       }
     },
-    submitForm(formData : any) {
+    submitForm(formDataUser : any , formDataAddress : any) {
       const endpoint_register = '/register/' + this.roleSelected;
-      axios.post(endpoint_register, formData, {withCredentials: true})
+      axios.post(endpoint_register, formDataUser, {withCredentials: true})
         .then(response => {
           console.log(response.data);
+
+          axios.post('/address/add', formDataAddress, {withCredentials: true})
+            .then(response => {
+              console.log(response.data);
+              
+            })
+            .catch(error => {
+              console.error(error);
+              console.log('address error!')
+            });
+              
           // Traitez la réponse de l'API Gateway ici
           this.registerMessage = 'Création du compte réussie!';
           this.$router.push('/restaurant'); // Redirection vers la page d'accueil

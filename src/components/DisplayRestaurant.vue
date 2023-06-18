@@ -2,46 +2,113 @@
   <div>
     <v-dialog
     v-model="Display"
-    width="1000">
-        <v-card
-            class="DisplayRestaurant"
-            max-width="1000"
-        >
-            <v-img
-            :src="RestaurantToDetail.Image"
-            max-height="500px"
-            cover
-            id="ImgRestaurant"
-            ></v-img>
+    max-width="1000">
+      <v-card class="DisplayRestaurant">
+        <v-container>
+          <v-row>
+            <v-col lg="auto" >
+              <v-card
+                  class="DisplayRestaurantInside"
+                  max-width="400"
+              >
+                  <v-img
+                  :src="RestaurantToDetail.Image"
+                  max-height="300px"
+                  cover
+                  id="ImgRestaurant"
+                  ></v-img>
 
-            <v-card-text>
-            <v-row
-                align="center"
-                class="mx-0"
-            >
-            <v-rating
-                v-model="RestaurantToDetail.Note"
-                color="yellow"
-                size="Medium"
-                half-increments
-                readonly
-            ></v-rating>
-            
-                <div class="text-grey ms-4">
-                {{RestaurantToDetail.Note}}
-                </div>
-            </v-row>
-                
-            <v-card-title>
-                {{RestaurantToDetail.Name}}
-            </v-card-title>
+                  <v-card-text>
+                  <v-row
+                      align="center"
+                      class="mx-0"
+                  >
+                  <v-rating
+                      v-model="RestaurantToDetail.Note"
+                      color="yellow"
+                      size="Medium"
+                      half-increments
+                      readonly
+                  ></v-rating>
+                  
+                      <div class="text-grey ms-4">
+                      {{RestaurantToDetail.Note}}
+                      </div>
+                  </v-row>
+                      
+                  <v-card-title>
+                      {{RestaurantToDetail.Name}}
+                  </v-card-title>
 
-            <v-card-subtitle>
-                {{RestaurantToDetail.Ville}}
-            </v-card-subtitle>
-            </v-card-text>
+                  <v-card-subtitle>
+                      {{RestaurantToDetail.Ville}}
+                  </v-card-subtitle>
+                  </v-card-text>
 
-        </v-card>
+              </v-card>
+            </v-col>
+            <v-col lg="auto">
+              <v-card
+                class="DisplayRestaurant"
+                max-width="550"
+                max-height="600"
+              > 
+                <v-card-text>
+                  <v-card-title>
+                      Menu
+                  </v-card-title>
+                  
+                  <v-list style="max-height: 500px; overflow-y: scroll;">
+                    <template v-for="Item in RestaurantToDetail.Carte">
+                      <div class="d-flex justify-space-between">
+                        <div>
+                          <v-list-item-title class="ma-3">
+                            {{ Item.Name }}
+                          </v-list-item-title>
+                          <v-list-item-text>
+                            {{ Item.Details }}
+                          </v-list-item-text>
+                        </div>
+                        <div>
+                          <v-avatar
+                          class="ma-3"
+                          size="90"
+                          tile
+                          >
+                            <v-img :src="Item.Image"></v-img>
+                          </v-avatar>
+                        </div>
+                      </div>
+                      <v-divider></v-divider>
+                    </template>
+                  </v-list>
+                            <!--
+                  <v-card v-for="Item in RestaurantToDetail.Carte">
+                    <div class="d-flex flex-no-wrap justify-space-between">
+                      <div>
+                        <v-card-title>
+                          {{ Item.Name }}
+                        </v-card-title>
+                        <v-card-subtitle>
+                          {{ Item.Details }}
+                        </v-card-subtitle>
+                      </div>
+                      <v-avatar
+                      class="ma-3"
+                      size="125"
+                      tile
+                      >
+                        <v-img :src="Item.Image"></v-img>
+                      </v-avatar>
+                    </div>
+                  </v-card>
+                -->
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
     </v-dialog>
     <v-container>
       <v-row>
@@ -98,8 +165,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Restaurant from '../Types/Restaurant';
+import ItemMenu from '../Types/ItemMenu';
 import type { PropType } from "vue";
-import DetailRestaurant from '../components/DetailRestaurant.vue'
 
 interface DisplayRestaurantData {
   Display: boolean,
@@ -109,7 +176,6 @@ interface DisplayRestaurantData {
 export default Vue.extend({
   name: 'DisplayRestaurant',
   components: {
-    DetailRestaurant,
   },
   props:{
     Restaurants: {
@@ -125,6 +191,7 @@ export default Vue.extend({
         Name: "Test",
         Ville: "",
         Note: 0,
+        Carte: []
       }
     };
   },
@@ -145,4 +212,7 @@ export default Vue.extend({
   border-radius: 25px;
 }
 
+.DisplayRestaurantInside{
+  border-radius: 15px;
+}
 </style>

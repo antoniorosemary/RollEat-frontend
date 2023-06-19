@@ -5,7 +5,6 @@
     fluid 
     class="d-flex justify-center align-center" 
     style="
-      height: 100vh;
       width: 100vw; 
       background-image: linear-gradient(62deg, #DB995A 0%, #D6D4A0 100%);
     "

@@ -27,6 +27,11 @@ const routes: Array<RouteConfig> = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/test',
+    name: 'test',
+    component: () => import( '../views/TestView.vue')
+  },
+  {
     path: store.state.hrefLogin,
     name: 'login',
     component: Login

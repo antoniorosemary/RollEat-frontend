@@ -1,10 +1,13 @@
 <template>
   <div>
-    <v-col lg="4">
+    <v-col lg="4" class="round">
       <ClientProfile v-if="role === 'client'" :user="user" />
       <RestaurantProfile v-else-if="role === 'restaurant'" :user="user" />
       <DeliveryProfile v-else-if="role === 'delivery'" :user="user" />
       <AdminProfile v-else-if="role === 'admin'" :user="user" />
+    </v-col>
+    <v-col lg="4" class="round">
+
     </v-col>
   </div>
 </template>
@@ -23,24 +26,34 @@ import AdminProfile from '../components/Profiles/AdminProfile.vue'
       AdminProfile
     },
     data() {
-      // return {
-      //   role: '', // This would be set based on your authentication logic
-      //   user: {}  // This would be the user data retrieved from your backend
-      // }
       return {
       role: 'client', // Set the role to 'client' for testing
       user: {
         firstName: 'John',
         lastName: 'Doe',
         email: 'john.doe@example.com',
-        address: '123 Main St, Anytown, USA',
+        addresses: [
+          {
+            name: 'Maison',
+            address: '123 Rue de la Maison'
+          },
+          {
+            name: 'Travail',
+            address: '456 Rue du Travail'
+          },
+          // Ajoutez autant d'adresses que nécessaire
+        ],
         birthDate: '1990-01-01',
         password: 'password123'
       }
+
     }
     }
   }
   </script>
 
 <style scoped>
+.round{
+    border-radius: 25;
+}
 </style>

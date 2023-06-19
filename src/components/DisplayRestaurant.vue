@@ -43,33 +43,33 @@
                   <v-card-subtitle>
                       {{RestaurantToDetail.Ville}}
                   </v-card-subtitle>
-                  <table>
+                  <table class="ma-3">
                     <tr>
-                      <td>Lundi :</td>
+                      <td class="tdLeft">Lundi :</td>
                       <td>{{RestaurantToDetail.Horraires.Monday}}</td>
                     </tr>
                     <tr>
-                      <td>Mardi :</td>
+                      <td class="tdLeft">Mardi :</td>
                       <td>{{RestaurantToDetail.Horraires.Tuesday}}</td>
                     </tr>
                     <tr>
-                      <td>Mercredi :</td>
+                      <td class="tdLeft">Mercredi :</td>
                       <td>{{RestaurantToDetail.Horraires.Wednesday}}</td>
                     </tr>
                     <tr>
-                      <td>Jeudi :</td>
+                      <td class="tdLeft">Jeudi :</td>
                       <td>{{RestaurantToDetail.Horraires.Thursday}}</td>
                     </tr>
                     <tr>
-                      <td>Vendredi :</td>
+                      <td class="tdLeft">Vendredi :</td>
                       <td>{{RestaurantToDetail.Horraires.Friday}}</td>
                     </tr>
                     <tr>
-                      <td>Samedi :</td>
+                      <td class="tdLeft">Samedi :</td>
                       <td>{{RestaurantToDetail.Horraires.Saturday}}</td>
                     </tr>
                     <tr>
-                      <td>Dimance :</td>
+                      <td class="tdLeft">Dimance :</td>
                       <td>{{RestaurantToDetail.Horraires.Sunday}}</td>
                     </tr>
                   </table>
@@ -116,7 +116,7 @@
                           size="100"
                           tile
                           >
-                            <v-img :src="Item.Image"></v-img>
+                            <v-img :src="Item.Image" class="DisplayRestaurantInside"></v-img>
                           </v-avatar>
                         </div>
                       </div>
@@ -137,45 +137,49 @@
         v-for="Restau in Restaurants" 
         v-on:click="ToggleDisplay(), TransfertRestaurant(Restau)"
         >
-          <v-card
-            class="DisplayRestaurant"
-            max-width="344"
-          >
-            <v-img
-              :src="Restau.Image"
-              height="160px"
-              cover
-              id="ImgRestaurant"
-            ></v-img>
-
-            <v-card-text>
-              <v-row
-                align="center"
-                class="mx-0"
+          <v-hover>
+            <template v-slot:default="{ hover }">
+              <v-card
+                :elevation="hover ? 6 : 1"
+                class="DisplayRestaurant Pointed"
+                max-width="344"
               >
-              <v-rating
-                v-model="Restau.Note"
-                color="yellow"
-                size="Medium"
-                half-increments
-                readonly
-              ></v-rating>
-              
-                <div class="text-grey ms-4">
-                  {{Restau.Note}}
-                </div>
-              </v-row>
-                
-              <v-card-title>
-                {{Restau.Name}}
-              </v-card-title>
+                <v-img
+                  :src="Restau.Image"
+                  height="160px"
+                  cover
+                  id="ImgRestaurant"
+                ></v-img>
 
-              <v-card-subtitle>
-                {{Restau.Ville}}
-              </v-card-subtitle>
-            </v-card-text>
+                <v-card-text>
+                  <v-row
+                    align="center"
+                    class="mx-0"
+                  >
+                  <v-rating
+                    v-model="Restau.Note"
+                    color="yellow"
+                    size="Medium"
+                    half-increments
+                    readonly
+                  ></v-rating>
+                  
+                    <div class="text-grey ms-4">
+                      {{Restau.Note}}
+                    </div>
+                  </v-row>
+                    
+                  <v-card-title>
+                    {{Restau.Name}}
+                  </v-card-title>
 
-          </v-card>
+                  <v-card-subtitle>
+                    {{Restau.Ville}}
+                  </v-card-subtitle>
+                </v-card-text>
+              </v-card>
+            </template>
+          </v-hover>
         </v-col>
       </v-row>
     </v-container>
@@ -239,26 +243,30 @@ export default Vue.extend({
 .DisplayRestaurant {
   border-radius: 25px;
 }
+.Pointed{
+  cursor: pointer;
+}
 
 .DisplayRestaurantInside{
   border-radius: 15px;
+}
+
+.tdLeft{
+  padding-right: 10px;
 }
 
 ::-webkit-scrollbar {
   width: 5px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1; 
 }
  
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888; 
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }

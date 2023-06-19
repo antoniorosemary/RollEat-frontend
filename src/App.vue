@@ -3,7 +3,7 @@
     <CustomHeader/>
 
     <v-main>
-      <router-view/>
+      <router-view class="body"/>
     </v-main>
 
     <CustomFooter/>
@@ -40,12 +40,15 @@ export default Vue.extend({
   background-image: linear-gradient(62deg, #DB995A 0%, #D6D4A0 100%);
 }
 
-body {
-  display: flex;
+.body {
+  /*display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100vh;*/
+  padding-top: 60px;
  /* padding:32px;*/
 }
+
+
 
 </style>

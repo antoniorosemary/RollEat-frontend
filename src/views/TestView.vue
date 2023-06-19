@@ -1,27 +1,36 @@
 <template>
     <div>
-    <div class="Connexion">
-        <h1>Connexion</h1>
-    </div>
     <div class="Title">
         <h1>Roll Eat</h1>
     </div>
+    <div class="Panier">
+        <h1>Panier</h1>
+        <h2>{{ TestValue }}</h2>
+    </div>
     <h2>Fast Food</h2>
-    <DisplayRestaurant  :Restaurants="Restaurants"></DisplayRestaurant>
+    <DisplayRestaurant  :Restaurants="Restaurants" @AddItem="AddToCart"></DisplayRestaurant>
     </div>
 </template>
   
   <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
   import DisplayRestaurant from '@/components/DisplayRestaurant.vue'
+  import ItemMenu from '../types/ItemMenu';
+  import Restaurant from '../types/Restaurant';
+
+  interface DisplayRestaurantData {
+    TestValue: string,
+    Restaurants: Array<Restaurant>,
+  }
 
   export default Vue.extend({
     name: 'TestView',
     components: {
       DisplayRestaurant,
     },
-    data() {
+    data(): DisplayRestaurantData{
       return {
+        TestValue: "",
         Restaurants: [
           {
             Image: "https://images.midilibre.fr/api/v1/images/view/5b462d753e45466a4e3f50e1/large/image.jpg",
@@ -125,10 +134,12 @@
             Carte:[]
           },
         ],
-        Display: {
-            ToDisplay: false
-        }
       };
+    },
+    methods: {
+      AddToCart(Item: ItemMenu) {
+        this.TestValue += Item.Name + ","
+      },
     },
   });
   </script>
@@ -138,6 +149,7 @@
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     font-size: 35px;
+    margin-top: 100px;
   }
 
   h2{
@@ -145,10 +157,9 @@
     font-size: 50px;
   }
   
-  .Connexion {
-    position: absolute;
+  .Panier {
     right: 0px;
-    top: 90px;
+    top: 100px;
     height: 10%;
   }
   </style>

@@ -98,13 +98,22 @@
                           <v-list-item-text>
                             {{ Item.Details }}
                             <br>
+                            <v-list-item-action class="ma-3">
+                              <v-btn 
+                              v-on:click="$emit('AddItem', Item)"
+                              small 
+                              color="primary">
+                                Ajouter
+                              </v-btn>
+                            </v-list-item-action>
                             <bold class="font-weight-black">{{ Item.Prix }} €</bold>
                           </v-list-item-text>
+                          
                         </div>
                         <div>
                           <v-avatar
                           class="ma-3"
-                          size="90"
+                          size="100"
                           tile
                           >
                             <v-img :src="Item.Image"></v-img>
@@ -175,7 +184,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import Restaurant from '../Types/Restaurant';
+import Restaurant from '../types/Restaurant';
 import type { PropType } from "vue";
 
 interface DisplayRestaurantData {
@@ -220,7 +229,7 @@ export default Vue.extend({
     },
     TransfertRestaurant(Restau: Restaurant){
       this.RestaurantToDetail = Restau
-    }
+    },
   },
 })
 
@@ -233,5 +242,24 @@ export default Vue.extend({
 
 .DisplayRestaurantInside{
   border-radius: 15px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 </style>

@@ -15,7 +15,6 @@
             </v-col>
   
             <v-col class="col-auto">
-              <UserButton/>
             </v-col>
           </v-row>
         </v-container>
@@ -35,11 +34,9 @@
     
   <script lang="ts">
   import ResponsiveLogo from '../ResponsiveLogo.vue';
-  import UserButton from '../UserButton.vue';
   export default {
     components: {
       ResponsiveLogo,
-      UserButton
     }
   }
   </script>

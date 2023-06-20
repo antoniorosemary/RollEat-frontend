@@ -96,19 +96,55 @@
                           <v-list-item-title class="ma-3">
                             {{ Item.Name }}
                           </v-list-item-title>
-                          <v-list-item-text>
                             {{ Item.Details }}
                             <br>
-                            <v-list-item-action class="ma-3">
-                              <v-btn 
+                            <v-btn 
                               v-on:click="$emit('AddItem', Item)"
                               small 
-                              color="primary">
-                                Ajouter
+                              color="primary"
+                              class="Align">
+                                  <v-icon
+                                  left
+                                  small
+                                  color="white"
+                                  >
+                                      mdi-plus-thick
+                                  </v-icon>
+                                  Plus
                               </v-btn>
-                            </v-list-item-action>
-                            <bold class="font-weight-black">{{ Item.Price }} €</bold>
-                          </v-list-item-text>
+                              <div v-if="Item.Quantity > 0" class="font-weight-black ma-2 Align"> {{ Item.Quantity }} </div>
+
+                              <v-btn 
+                              v-if="Item.Quantity == 1"
+                              v-on:click="$emit('MinusItem', Item)"
+                              small 
+                              color="error"
+                              >
+                                  <v-icon
+                                  left
+                                  small
+                                  color="white"
+                                  >
+                                      mdi-delete
+                                  </v-icon>
+                                  Supprimer
+                              </v-btn>
+
+                              <v-btn 
+                              v-if="Item.Quantity > 1"
+                              v-on:click="$emit('MinusItem', Item)"
+                              small 
+                              color="primary">
+                                  <v-icon
+                                  left
+                                  small
+                                  color="white"
+                                  >
+                                      mdi-minus-thick
+                                  </v-icon>
+                                  Moins
+                              </v-btn>
+                            <p class="font-weight-black ma-2">{{ Item.Price }} €</p>
                           
                         </div>
                         <div>
@@ -213,7 +249,7 @@ export default Vue.extend({
         City: "",
         ZipCode: 0,
         Adress: "",
-        Rating: [],
+        Rating: 0,
         Schedule: {
           Monday: "",
           Tuesday: "",
@@ -247,6 +283,10 @@ export default Vue.extend({
 
 .DisplayRestaurantInside{
   border-radius: 15px;
+}
+
+.Align{
+  display:inline-block;
 }
 
 ::-webkit-scrollbar {

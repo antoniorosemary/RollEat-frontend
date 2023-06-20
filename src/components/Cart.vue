@@ -17,10 +17,10 @@
         <v-dialog
         v-model="Display"
         content-class="my-custom-dialog"
-        max-width="600"
+        max-width="710"
         transition="slide-x-reverse-transition"
         Left>
-            <v-card class="round" max-height="600">
+            <v-card class="round" max-height="710">
                 <v-card-title>
                     Panier
                 </v-card-title>
@@ -32,11 +32,11 @@
                                 <v-list-item-title class="ma-3">
                                     {{ Item.Name }}
                                 </v-list-item-title>
-                                <v-list-item-text>
                                     <v-btn 
                                     v-on:click="$emit('AddItem', Item)"
                                     small 
-                                    color="primary">
+                                    color="primary"
+                                    class="Align">
                                         <v-icon
                                         left
                                         small
@@ -46,9 +46,27 @@
                                         </v-icon>
                                         Plus
                                     </v-btn>
-                                    <bold class="font-weight-black ma-2"> {{ Item.Quantity }} </bold>
+                                    <div class="font-weight-black ma-2 Align"> {{ Item.Quantity }} </div>
+
                                     <v-btn 
-                                    v-on:click="$emit('AddItem', Item)"
+                                    v-if="Item.Quantity == 1"
+                                    v-on:click="$emit('MinusItem', Item)"
+                                    small 
+                                    color="error"
+                                    >
+                                        <v-icon
+                                        left
+                                        small
+                                        color="white"
+                                        >
+                                            mdi-delete
+                                        </v-icon>
+                                        Supprimer
+                                    </v-btn>
+
+                                    <v-btn 
+                                    v-else
+                                    v-on:click="$emit('MinusItem', Item)"
                                     small 
                                     color="primary">
                                         <v-icon
@@ -60,10 +78,9 @@
                                         </v-icon>
                                         Moins
                                     </v-btn>
+
                                     <br>
-                                    <br>
-                                    <bold class="font-weight-black">{{ Item.Price }} €</bold>
-                                </v-list-item-text>
+                                    <p class="font-weight-black">{{ (Item.Price * Item.Quantity).toFixed(2) }} €</p>
                                 
                                 </div>
                                 <div>
@@ -79,6 +96,32 @@
                             <v-divider></v-divider>
                         </template>
                     </v-list>
+                    <div v-if="Incart.Products.length != 0 || Incart.Menus.length != 0" class="font-weight-black">
+                        <br>
+                        <v-divider></v-divider>
+                        Total
+                        <v-divider></v-divider>
+                        {{ Total }} €
+                        <v-divider></v-divider>
+                        <br>
+                        <v-btn
+                        Large 
+                        color="primary"
+                        middle
+                        block
+                        >
+                            <v-icon
+                            medium
+                            color="white"
+                            >
+                                mdi-cart-check
+                            </v-icon>
+                            Commander
+                        </v-btn>
+                    </div>
+                    <div v-else>
+                        <v-card-subtitle>Votre Panier est vide</v-card-subtitle>
+                    </div>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -96,6 +139,7 @@
   
   interface DisplayRestaurantData {
     Display: boolean,
+    Total: number,
   }
   
   export default Vue.extend({
@@ -110,13 +154,18 @@
     data():DisplayRestaurantData {
       return {
         Display: false,
+        Total: 0,
       };
     },
     methods: {
-      ToggleDisplay() {
-        this.Display = !this.Display ;
-      },
+        ToggleDisplay() {
+            this.Display = !this.Display ;
+        },
+        
     },
+    computed:{
+        
+    }
   })
   
   </script>
@@ -130,6 +179,10 @@
   .round-in{
     border-radius: 15px;
   }
+
+  .Align{
+  display:inline-block;
+}
   
   ::-webkit-scrollbar {
     width: 5px;

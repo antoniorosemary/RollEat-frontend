@@ -1,14 +1,12 @@
 <template>
     <div>
-    <Cart :Incart="ItemsInCart"></Cart>
+    <Cart :Incart="ItemsInCart" @AddItem="AddToCart" @MinusItem="MinusToCart"></Cart>
     <div class="Title">
         <h1>Roll Eat</h1>
     </div>
-    <p v-for="Item in ItemsInCart.Products">
-      {{ Item.Name }}
-    </p>
     <h2>Fast Food</h2>
-    <DisplayRestaurant  :Restaurants="Restaurants" @AddItem="AddToCart"></DisplayRestaurant>
+    <DisplayRestaurant  :Restaurants="Restaurants" @AddItem="AddToCart" @MinusItem="MinusToCart"></DisplayRestaurant>
+    {{ Total }}
     </div>
 </template>
   
@@ -22,6 +20,7 @@
   import InCart from '../types/InCart';
 
   interface DisplayRestaurantData {
+    Total: number,
     ItemsInCart: InCart,
     Restaurants: Array<Restaurant>,
   }
@@ -34,6 +33,7 @@
     },
     data(): DisplayRestaurantData{
       return {
+        Total: 0,
         ItemsInCart: {
           Menus: [],
           Products: [],
@@ -45,7 +45,7 @@
             City: "Strasbourg",
             ZipCode: 67000,
             Adress: "test",
-            Rating: [4.6,4,4.2],
+            Rating: 4.6,
             Schedule:{
               Monday: "12:00-14:00, 17:00-22:00",
               Tuesday: "12:00-14:00, 17:00-22:00",
@@ -62,7 +62,7 @@
                 Name: "Kebab Du chef",
                 Details: "Salade, Tomate, Oignon",
                 Price: 4.99,
-                Quantity: 1,
+                Quantity: 0,
               },
               {
                 IdProduct: 2,
@@ -70,7 +70,7 @@
                 Name: "Kebab Du chef +",
                 Details: "Salade, Tomate, Oignon, pneu, huile, ciment, sable, gravier, verre",
                 Price: 5.99,
-                Quantity: 1,
+                Quantity: 0,
               },
               {
                 IdProduct: 3,
@@ -78,7 +78,7 @@
                 Name: "Youfka zebi",
                 Details: "Salade, Tomate, Oignon",
                 Price: 4.99,
-                Quantity: 1,
+                Quantity: 0,
               },
               {
                 IdProduct: 4,
@@ -86,7 +86,7 @@
                 Name: "brochetes d'animal",
                 Details: "biande d'animal avec ses herbes",
                 Price: 5.99,
-                Quantity: 1,
+                Quantity: 0,
               },
               {
                 IdProduct: 5,
@@ -94,7 +94,7 @@
                 Name: "Kebab Du chef ++++",
                 Details: "Salade, Tomate, Oignon",
                 Price: 12.99,
-                Quantity: 1,
+                Quantity: 0,
               },
               {
                 IdProduct: 6,
@@ -102,7 +102,7 @@
                 Name: "Kebab rech sa mère",
                 Details: "c'est même pas un kebab mon couz: Salade, Tomate, Oignon, Salade, Tomate, Oignon",
                 Price: 25,
-                Quantity: 1,
+                Quantity: 0,
               },
             ],
             Menus:[
@@ -113,7 +113,7 @@
                 Products: [1,2,3],
                 Details: "La base fréro",
                 Price: 12.80,
-                Quantity: 1,
+                Quantity: 0,
               },
             ],
           },
@@ -123,7 +123,7 @@
             City: "Ouganda",
             ZipCode: 12345,
             Adress: "test",
-            Rating: [12],
+            Rating: 12,
             Schedule:{
               Monday: "12:00-14:00, 17:00-22:00",
               Tuesday: "12:00-14:00, 17:00-22:00",
@@ -142,7 +142,7 @@
             City: "Ostwald",
             ZipCode: 12345,
             Adress: "test",
-            Rating: [3.2],
+            Rating: 3.2,
             Schedule:{
               Monday: "12:00-14:00, 17:00-22:00",
               Tuesday: "12:00-14:00, 17:00-22:00",
@@ -161,7 +161,7 @@
             City: "Strasbourg",
             ZipCode: 12345,
             Adress: "test",
-            Rating: [5],
+            Rating: 5,
             Schedule:{
               Monday: "12:00-14:00, 17:00-22:00",
               Tuesday: "12:00-14:00, 17:00-22:00",
@@ -188,7 +188,30 @@
           }
         }
         if(isin == false){
+          Product.Quantity += 1
           this.ItemsInCart.Products.push(Product)
+        }
+      },
+      MinusToCart(Product: Product){
+        let Quantity = 1;
+        let Index = 0;
+        for (let i = 0; i < this.ItemsInCart.Products.length ; i++){
+          if (this.ItemsInCart.Products[i].IdProduct == Product.IdProduct){
+            this.ItemsInCart.Products[i].Quantity -= 1;
+            Quantity = this.ItemsInCart.Products[i].Quantity;
+            Index = i;
+            break;
+          }
+        }
+        if(Quantity == 0){
+          this.ItemsInCart.Products.splice(Index, 1);
+        }
+      },
+    },
+    computed:{
+      UpdateTotal(){
+        for (let i = 0; i < this.ItemsInCart.Products.length ; i++){
+          this.Total += this.ItemsInCart.Products[i].Quantity * this.ItemsInCart.Products[i].Price;
         }
       }
     },

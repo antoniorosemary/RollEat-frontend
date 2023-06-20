@@ -8,7 +8,7 @@ interface Restaurant{
     City: string,
     ZipCode: Number,
     Adress: string,
-    Rating: Array<number>,
+    Rating: number,
     Schedule: Schedule,
     Products: Array<Produit>,
     Menus: Array<Menu>,

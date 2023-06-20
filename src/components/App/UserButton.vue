@@ -66,7 +66,7 @@
 </template>
   
 <script lang="ts">
-import UserButtonListItem from '../types/UserButtonListItem';
+import UserButtonListItem from '../../types/UserButtonListItem';
 import { mapState } from 'vuex'
 import Vue from 'vue'
 

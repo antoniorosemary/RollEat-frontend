@@ -1,5 +1,3 @@
-
-
 <template>
   <v-container 
     fluid 
@@ -13,6 +11,7 @@
       <v-card-title h3>
         Créer un compte
       </v-card-title>
+
       <v-card-subtitle>
         Vous avez déja un compte ? 
           <router-link :to="hrefLogin">
@@ -138,7 +137,10 @@
                   color="#654236ff"
                 />
               </template>
-              <v-date-picker v-model="dateOfBirth" @input="dateOfBirthMenu = false"></v-date-picker>
+              <v-date-picker 
+                v-model="dateOfBirth" 
+                @input="dateOfBirthMenu = false"
+              />
             </v-menu>
           </div>
 
@@ -204,14 +206,12 @@
         <v-btn color=#d6d4a0ff @click="previousStep" :disabled="step === 1">
           Étape précédente
         </v-btn>
-        <v-spacer></v-spacer>
+        <v-spacer/>
         <v-btn color=#da7635ff @click="nextStep">
           {{ step < 3 ? 'Étape suivante' : 'S\'inscrire' }}
         </v-btn>
       </v-card-actions>
-
     </v-card>
-
   </v-container>
 </template>
 

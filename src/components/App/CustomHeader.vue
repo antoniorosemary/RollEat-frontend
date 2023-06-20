@@ -35,8 +35,8 @@
 </template>
   
 <script lang="ts">
-import ResponsiveLogo from '../ResponsiveLogo.vue';
-import UserButton from '../UserButton.vue';
+import ResponsiveLogo from './ResponsiveLogo.vue';
+import UserButton from './UserButton.vue';
 export default {
   components: {
     ResponsiveLogo,

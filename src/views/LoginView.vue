@@ -1,15 +1,20 @@
-
-
 <template>
-  <v-container fluid class="d-flex justify-center align-center" style="height: 100vh;width: 100vw; background-image: linear-gradient(62deg, #DB995A 0%, #D6D4A0 100%);">
-    
+  <v-container 
+    fluid 
+    class="d-flex justify-center align-center" 
+    style="
+      height: 100vh;
+      width: 100vw; 
+      background-image: linear-gradient(62deg, #DB995A 0%, #D6D4A0 100%);
+    "
+  >  
     <v-card class="elevation-3" >
       <v-card-title h3>
         Connexion
       </v-card-title>
+
       <v-card-subtitle>
         Vous n'avez pas encore de compte ?
-        
           <router-link :to="hrefRegister">
             <a>
               créer un compte
@@ -28,7 +33,7 @@
             @input="$v.email.$touch()"
             @blur="$v.email.$touch()"
             color="#654236ff"
-          ></v-text-field>
+          />
 
           <v-text-field
             prepend-icon="lock"
@@ -40,8 +45,9 @@
             @input="$v.password.$touch()"
             @blur="$v.password.$touch()"
             color="#654236ff"
-          ></v-text-field>
+          />
         </v-form>
+
         <v-alert
           outlined
           type="warning"
@@ -52,15 +58,15 @@
           {{ loginMessage }}  
         </v-alert>
       </v-card-text>
+
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-spacer/>
+
         <v-btn color=#da7635ff @click="submitForm">
           Se connecter
         </v-btn>
       </v-card-actions>
-
     </v-card>
-
   </v-container>
 </template>
 
@@ -115,9 +121,9 @@ export default Vue.extend({
       required,
       passwordMinLength,
       passwordHasUppercase,
-     passwordHasLowercase,
-     passwordHasDigit,
-     passwordHasSpecialChar
+      passwordHasLowercase,
+      passwordHasDigit,
+      passwordHasSpecialChar
     },
   },
   computed: {
@@ -146,7 +152,11 @@ export default Vue.extend({
 
   methods: {
     submitForm() {
-      axios.post('/login', { username: this.email, password: this.password }, { withCredentials: true })
+      axios.post(
+        '/login', 
+        { username: this.email, password: this.password }, 
+        { withCredentials: true }
+      )
         .then(response => {
           console.log(response.data);
           // Traitez la réponse de l'API Gateway ici

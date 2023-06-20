@@ -77,32 +77,60 @@ $gradient-radial: radial-gradient(#db995aff, #654236ff, #d6d4a0ff, #da7635ff, #e
 ## Files in src
 - **assets**
 > Media files of the project
+
 - **components**
 > Components created for the pages
+  - **App**
+    - *CustomFooter*
+    > Component used to render the footer
+    - *CustomHeader*
+    > Component used to render the header
+    - *ResponsiveLogo*
+    > Component used to render the logo responsively
+    - *UserButton*
+    > Component used to redirect to the login page when logged out and display navigation options to the client when logged in
+
   - *MassText*
   > Component used to display multiples lines of text following vuetify's typorephy rules: https://v2.vuetifyjs.com/en/styles/text-and-typography/#typography
-  - *UserButton*
-  > Component used to redirect to the login page when logged out and display navigation options to the client when logged in
+  
+- **plugins**
+  - *vuetify*
+  > Setup for vuetify and personnalized style for vuetify
+
 - **router**
-    - *index*
-    > Manage the navigation between the pages
+  - *index*
+  > Manage the navigation between the pages
+
 - **store**
-    - *index*
-    > Manage the data store used accross the application
+  - *index*
+  > Manage the data store used accross the application
+
 - **types**
 > Custom Types used in multiple pages
+
 - **utils**
 > Utility function and classes used accros the application
+
 - **views**
 > Components corresponding to pages of the application
   - **footer**
     - *AboutUsView*
-    > About Us page Component
+    > About Us page's Component
     - *ContactUsView*
-    > Contact Us page Component
+    > Contact Us page's Component
     - *Join Delivery*
-    > Join Delivery page
+    > Join Delivery page's Component
+
+  - *HomeView*
+  > Default page's Component
+  - *LoginView*
+  > Login page's Component
+  - *Register*
+  > Register page's Component
+
 - *App*
 > Entry Component of the page
 - *main*
 > Entry Point of the application's javascript
+- *axiosDefaultCoonfig*
+> Default config for axios requests

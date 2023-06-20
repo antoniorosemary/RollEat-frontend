@@ -4,10 +4,10 @@ import store from '../store/index'
 import axios from 'axios'
 
 import HomeView from '../views/HomeView.vue'
-import Login from '../components/Login.vue'
+import Login from '../views/LoginView.vue'
 import Client from '../components/Client.vue'
 import Restaurant from '../components/Restaurant.vue'
-import Register from '../components/Register.vue'
+import Register from '../views/RegisterView.vue'
 
 // Footer Pages
 import AboutUsViewVue from '../views/footer/AboutUsView.vue'
@@ -25,44 +25,20 @@ const routes: Array<RouteConfig> = [
   },{
     path: '/test',
     name: 'test',
-    component: () => import( '../views/TestView.vue')
+    component: () => import( '../views/TestView.vue'),
+    meta: { requiresAuth: true }
   },{
     path: store.state.hrefLogin,
     name: 'login',
     component: Login
-  },
-  /*{
-    path: '/client',
-    name: 'client',
-    component: Client
-  },*/
-  /*{
-    path: '/restaurant',
-    name: 'restaurant',
-    component: Restaurant
-  },*/
-  {
+  },{
     path: store.state.hrefRegister,
     name: 'register',
     component: Register
-  },
-  // {
-  //   path: '/protected',
-  //   name: 'protected',
-  //   component: ProtectedView,
-  //   beforeEnter: (to, from, next) => {
-  //     if (store.state.user) {
-  //       next()
-  //     } else {
-  //       next('/login')
-  //     }
-  //   }
-  // }
-  {
+  },{
     path: store.state.hrefAboutUs,
     name: 'aboutUs',
-    component: AboutUsViewVue,
-    //meta: { requiresAuth: true }
+    component: AboutUsViewVue
   },{
     path:  store.state.hrefContactUs,
     name: 'contactUs',

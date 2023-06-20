@@ -102,8 +102,8 @@ router.beforeEach(async (to, from, next) => {
 
 async function checkAuthentication() {
   try {
-    const token = document.cookie.split('=')[1];
-    const response = await axios.post('/auth',{token:token});
+    // const token = document.cookie.split('=')[1];
+    const response = await axios.post('/auth',{withCredentials: true});
     return response.status === 200;
   } catch (error) {
     console.error(error);

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card max-width="375" class="mx-auto round">
+        <v-card class="mx-auto round">
             <v-img src="https://cdn.vuetifyjs.com/images/lists/ali.png" height="300px" dark>
                 <v-btn dark icon class="mr-4" style="position: absolute; top: 10px; right: 0;" @click="dialog = true">
                     <v-icon>mdi-pencil</v-icon>
@@ -182,7 +182,6 @@ export default class UserDialog extends Vue {
 <style scoped>
 .v-card {
   margin: 0 auto;
-  max-width: 375px;
 }
 
 .v-img {

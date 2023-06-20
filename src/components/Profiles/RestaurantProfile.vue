@@ -50,31 +50,36 @@
 
                     </v-expansion-panel>
                     <!-- menus -->
-                    <v-expansion-panels multiple>
-                        <v-expansion-panel v-for="(menu, j) in restaurant.menus" :key="j">
-
+                    <v-expansion-panel>
                         <v-expansion-panel-header>
-                            {{ menu.name }}
-                            <v-btn color="blue darken-1" text @click.stop="editMenu(i, j)">Modifier</v-btn>
+                            Menus
                         </v-expansion-panel-header>
-                        
-                        <v-expansion-panel-content>
-                            <v-list>
-                            <v-list-item v-for="(productId, k) in menu.productIds" :key="k">
-                                <v-list-item-avatar>
-                                <v-img :src="getProductById(restaurant, productId).image"></v-img>
-                                </v-list-item-avatar>
-                                <v-list-item-content>
-                                <v-list-item-title>{{ getProductById(restaurant, productId).name }}</v-list-item-title>
-                                <v-list-item-subtitle>{{ getProductById(restaurant, productId).description }}</v-list-item-subtitle>
-                                <v-list-item-subtitle>{{ getProductById(restaurant, productId).price }} €</v-list-item-subtitle>
-                                </v-list-item-content>
-                            </v-list-item>
-                            </v-list>
-                        </v-expansion-panel-content>
+                            <v-expansion-panel-content>
+                                <v-expansion-panel v-for="(menu, j) in restaurant.menus" :key="j">
 
-                        </v-expansion-panel>
-                    </v-expansion-panels>
+                                <v-expansion-panel-header>
+                                    {{ menu.name }}
+                                    <v-btn color="blue darken-1" text @click.stop="editMenu(i, j)">Modifier</v-btn>
+                                </v-expansion-panel-header>
+                                
+                                <v-expansion-panel-content>
+                                    <v-list>
+                                    <v-list-item v-for="(productId, k) in menu.productIds" :key="k">
+                                        <v-list-item-avatar>
+                                        <v-img :src="getProductById(restaurant, productId).image"></v-img>
+                                        </v-list-item-avatar>
+                                        <v-list-item-content>
+                                        <v-list-item-title>{{ getProductById(restaurant, productId).name }}</v-list-item-title>
+                                        <v-list-item-subtitle>{{ getProductById(restaurant, productId).description }}</v-list-item-subtitle>
+                                        <v-list-item-subtitle>{{ getProductById(restaurant, productId).price }} €</v-list-item-subtitle>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                    </v-list>
+                                </v-expansion-panel-content>
+
+                                </v-expansion-panel>
+                            </v-expansion-panel-content>
+                    </v-expansion-panel>
                   </v-expansion-panels>
                   
                 </v-card-text>

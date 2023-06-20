@@ -1,11 +1,20 @@
 <template>
-  <div>
-    <v-row>
-      <v-col lg="4">
+  <div><br>
+
+    <v-row v-if="role != 'restaurant'">
+      <v-col cols="10" offset="2">
+        <Profile :user="user" style="width: 80%;"/>
+      </v-col>
+    </v-row>
+
+
+
+    <v-row v-if="role === 'restaurant'">
+      <v-col lg="4" offset="1">
         <Profile :user="user" />
       </v-col>
       <v-col lg="6">
-        <RestaurantProfile v-if="role === 'restaurant'" :user="user" />
+        <RestaurantProfile :user="user" />
       </v-col>
     </v-row>
   </div>
@@ -114,13 +123,6 @@ import RestaurantProfile from '../components/Profiles/RestaurantProfile.vue'
 
 
 
-  }
-  </script>
-
-<style scoped>
-.round{
-    border-radius: 25px;
-    padding-top: 50px;
 }
-</style>
+</script>
 

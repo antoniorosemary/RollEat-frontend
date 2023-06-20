@@ -1,5 +1,3 @@
-import Product from './Product'
-
 interface Menu{
     IdMenu: number,
     Name: string,

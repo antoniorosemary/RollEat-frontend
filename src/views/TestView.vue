@@ -1,12 +1,11 @@
 <template>
     <div>
-    <Cart :Incart="ItemsInCart" @AddItem="AddToCart" @MinusItem="MinusToCart"></Cart>
+    <Cart :Incart="ItemsInCart" :Restaurant="CartInRestaurant" @AddItem="AddToCart" @MinusItem="MinusToCart"></Cart>
     <div class="Title">
         <h1>Roll Eat</h1>
     </div>
     <h2>Fast Food</h2>
     <DisplayRestaurant  :Restaurants="Restaurants" @AddItem="AddToCart" @MinusItem="MinusToCart"></DisplayRestaurant>
-    {{ Total }}
     </div>
 </template>
   
@@ -20,9 +19,9 @@
   import InCart from '../types/InCart';
 
   interface DisplayRestaurantData {
-    Total: number,
     ItemsInCart: InCart,
-    Restaurants: Array<Restaurant>,
+    CartInRestaurant: Restaurant,
+    Restaurants: Array<Restaurant>,  
   }
 
   export default Vue.extend({
@@ -33,7 +32,25 @@
     },
     data(): DisplayRestaurantData{
       return {
-        Total: 0,
+        CartInRestaurant:{
+          Image: "",
+          Name: "Test",
+          City: "",
+          ZipCode: 0,
+          Adress: "",
+          Rating: 0,
+          Schedule: {
+            Monday: "",
+            Tuesday: "",
+            Wednesday: "",
+            Thursday: "",
+            Friday: "",
+            Saturday: "",
+            Sunday: "",
+          },
+          Products: [],
+          Menus: [],
+        },
         ItemsInCart: {
           Menus: [],
           Products: [],
@@ -133,7 +150,23 @@
               Saturday: "12:00-14:00, 17:00-22:00",
               Sunday: "12:00-14:00, 17:00-22:00",
             },
-            Products:[],
+            Products:[{
+                IdProduct: 1,
+                Image: "https://previews.123rf.com/images/ruslan_kokarev/ruslan_kokarev1210/ruslan_kokarev121000139/15913145-escalopes-de-poulet-l%C3%A9g%C3%A8rement-br%C3%BBl%C3%A9-sur-la-plaque.jpg",
+                Name: "9 Nuggets di poulet",
+                Details: "Ti con ou quoi ti sais pas ce que c'est di nuggets di pouli ???",
+                Price: 6.5,
+                Quantity: 0,
+              },
+              {
+                IdProduct: 2,
+                Image: "https://media.istockphoto.com/id/156024466/fr/photo/burnt-nuggets-de-poulet-sur-fond-en-bois.jpg?s=612x612&w=0&k=20&c=RW02Osf1tOF2HtO0l59Iq6VgEELR7pKhXzRKaUmdroA=",
+                Name: "Nuggets fond di friteuse",
+                Details: "Elles ont un peut cahud",
+                Price: 7,
+                Quantity: 0,
+              },
+            ],
             Menus:[],
           },
           {
@@ -178,7 +211,10 @@
       };
     },
     methods: {
-      AddToCart(Product: Product) {
+      AddToCart(Product: Product, Restau: Restaurant){
+        if(this.CartInRestaurant != Restau){
+          this.DeleteCart();
+        }
         let isin = false;
         for (let i = 0; i < this.ItemsInCart.Products.length ; i++){
           if (this.ItemsInCart.Products[i].IdProduct == Product.IdProduct){
@@ -191,6 +227,7 @@
           Product.Quantity += 1
           this.ItemsInCart.Products.push(Product)
         }
+        this.CartInRestaurant = Restau;
       },
       MinusToCart(Product: Product){
         let Quantity = 1;
@@ -207,13 +244,15 @@
           this.ItemsInCart.Products.splice(Index, 1);
         }
       },
+      DeleteCart(){
+        for (let i = 0; i < this.ItemsInCart.Products.length ; i++){
+          this.ItemsInCart.Products[i].Quantity = 0;
+        }
+        this.ItemsInCart.Products = [];
+      }
     },
     computed:{
-      UpdateTotal(){
-        for (let i = 0; i < this.ItemsInCart.Products.length ; i++){
-          this.Total += this.ItemsInCart.Products[i].Quantity * this.ItemsInCart.Products[i].Price;
-        }
-      }
+      
     },
   });
   </script>

@@ -17,15 +17,37 @@
         <v-dialog
         v-model="Display"
         content-class="my-custom-dialog"
-        max-width="710"
+        max-width="810"
         transition="slide-x-reverse-transition"
         Left>
-            <v-card class="round" max-height="710">
+            <v-card class="round" max-height="800" style="overflow-y: scroll;">
                 <v-card-title>
                     Panier
                 </v-card-title>
+                <v-card class="round-in ma-3">
+                    <div class="d-flex justify-space-between">
+                        <div>
+                        <v-card-title>
+                            Vous commander dans les restaurant :
+                            <br>
+                            {{ Restaurant.Name }}
+                        </v-card-title>
+                        <v-card-subtitle>
+                            {{Restaurant.City}}
+                        </v-card-subtitle>
+                        </div>
+                        <v-avatar
+                        class="ma-3"
+                        size="90"
+                        tile
+                        >
+                            <v-img :src="Restaurant.Image" class="round-in"></v-img>
+                        </v-avatar>
+                    </div>
+                </v-card>
+                
                 <v-card-text>
-                    <v-list style="max-height: 500px; overflow-y: scroll;">
+                    <v-list>
                         <template v-for="Item in Incart.Products">
                             <div class="d-flex justify-space-between">
                                 <div>
@@ -33,7 +55,7 @@
                                     {{ Item.Name }}
                                 </v-list-item-title>
                                     <v-btn 
-                                    v-on:click="$emit('AddItem', Item)"
+                                    v-on:click="$emit('AddItem', Item, Restaurant)"
                                     small 
                                     color="primary"
                                     class="Align">
@@ -101,7 +123,7 @@
                         <v-divider></v-divider>
                         Total
                         <v-divider></v-divider>
-                        {{ Total }} €
+                        {{ (UpdateTotal).toFixed(2) }} €
                         <v-divider></v-divider>
                         <br>
                         <v-btn
@@ -139,7 +161,6 @@
   
   interface DisplayRestaurantData {
     Display: boolean,
-    Total: number,
   }
   
   export default Vue.extend({
@@ -149,12 +170,14 @@
     props:{
         Incart: {
             type: Object as PropType<InCart>,
+        },
+        Restaurant:{
+            type: Object as PropType<Restaurant>,
         }
     },
     data():DisplayRestaurantData {
       return {
         Display: false,
-        Total: 0,
       };
     },
     methods: {
@@ -164,7 +187,14 @@
         
     },
     computed:{
-        
+        UpdateTotal(){
+        let Total: number;
+        Total = 0;    
+        for (let i = 0; i < this.Incart.Products.length ; i++){
+          Total += this.Incart.Products[i].Quantity * this.Incart.Products[i].Price;
+        }
+        return Total;
+      }
     }
   })
   

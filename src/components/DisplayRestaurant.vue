@@ -83,83 +83,10 @@
                 class="DisplayRestaurantInside"
                 max-width="550"
                 max-height="600"
+                style="overflow-y: scroll;"
               > 
                 <v-card-text>
-                  <v-card-title>
-                      Menu
-                  </v-card-title>
-                  
-                  <v-list style="max-height: 500px; overflow-y: scroll;">
-                    <template v-for="Item in RestaurantToDetail.Products">
-                      <div class="d-flex justify-space-between">
-                        <div>
-                          <v-list-item-title class="ma-3">
-                            {{ Item.Name }}
-                          </v-list-item-title>
-                            {{ Item.Details }}
-                            <br>
-                            <v-btn 
-                              v-on:click="$emit('AddItem', Item)"
-                              small 
-                              color="primary"
-                              class="Align">
-                                  <v-icon
-                                  left
-                                  small
-                                  color="white"
-                                  >
-                                      mdi-plus-thick
-                                  </v-icon>
-                                  Plus
-                              </v-btn>
-                              <div v-if="Item.Quantity > 0" class="font-weight-black ma-2 Align"> {{ Item.Quantity }} </div>
-
-                              <v-btn 
-                              v-if="Item.Quantity == 1"
-                              v-on:click="$emit('MinusItem', Item)"
-                              small 
-                              color="error"
-                              >
-                                  <v-icon
-                                  left
-                                  small
-                                  color="white"
-                                  >
-                                      mdi-delete
-                                  </v-icon>
-                                  Supprimer
-                              </v-btn>
-
-                              <v-btn 
-                              v-if="Item.Quantity > 1"
-                              v-on:click="$emit('MinusItem', Item)"
-                              small 
-                              color="primary">
-                                  <v-icon
-                                  left
-                                  small
-                                  color="white"
-                                  >
-                                      mdi-minus-thick
-                                  </v-icon>
-                                  Moins
-                              </v-btn>
-                            <p class="font-weight-black ma-2">{{ Item.Price }} €</p>
-                          
-                        </div>
-                        <div>
-                          <v-avatar
-                          class="ma-3"
-                          size="100"
-                          tile
-                          >
-                            <v-img :src="Item.Image"></v-img>
-                          </v-avatar>
-                        </div>
-                      </div>
-                      <v-divider></v-divider>
-                    </template>
-                  </v-list>
+                  <Catalog :Catalog="Catalog" @AddItem="AddToCart" @MinusItem="MinusToCart"></Catalog>
                 </v-card-text>
               </v-card>
             </v-col>
@@ -223,9 +150,13 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Restaurant from '../types/Restaurant';
+import InCart from '../types/InCart';
+import Catalog from '../components/Catalog.vue';
+import Product from '../types/Product'
 import type { PropType } from "vue";
 
 interface DisplayRestaurantData {
+  Catalog: InCart,
   Display: boolean,
   RestaurantToDetail: Restaurant
 }
@@ -233,6 +164,7 @@ interface DisplayRestaurantData {
 export default Vue.extend({
   name: 'DisplayRestaurant',
   components: {
+    Catalog
   },
   props:{
     Restaurants: {
@@ -242,6 +174,10 @@ export default Vue.extend({
   },
   data():DisplayRestaurantData {
     return {
+      Catalog:{
+        Products:[],
+        Menus:[],
+      },
       Display: false,
       RestaurantToDetail: {
         Image: "",
@@ -269,7 +205,15 @@ export default Vue.extend({
       this.Display = !this.Display ;
     },
     TransfertRestaurant(Restau: Restaurant){
-      this.RestaurantToDetail = Restau
+      this.RestaurantToDetail = Restau;
+      this.Catalog.Products = Restau.Products;
+      this.Catalog.Menus = Restau.Menus;
+    },
+    AddToCart(Product: Product) {
+      this.$emit('AddItem', Product, this.RestaurantToDetail);
+    },
+    MinusToCart(Product: Product) {
+      this.$emit('MinusItem', Product);
     },
   },
 })

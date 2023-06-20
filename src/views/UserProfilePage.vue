@@ -1,59 +1,126 @@
 <template>
   <div>
-    <v-col lg="4" class="round">
-      <ClientProfile v-if="role === 'client'" :user="user" />
-      <RestaurantProfile v-else-if="role === 'restaurant'" :user="user" />
-      <DeliveryProfile v-else-if="role === 'delivery'" :user="user" />
-      <AdminProfile v-else-if="role === 'admin'" :user="user" />
-    </v-col>
-    <v-col lg="4" class="round">
-
-    </v-col>
+    <v-row>
+      <v-col lg="4">
+        <Profile :user="user" />
+      </v-col>
+      <v-col lg="6">
+        <RestaurantProfile v-if="role === 'restaurant'" :user="user" />
+      </v-col>
+    </v-row>
   </div>
 </template>
+
   
 <script lang="ts">
-import ClientProfile from '../components/Profiles/ClientProfile.vue'
+import Profile from '../components/Profiles/Profile.vue'
 import RestaurantProfile from '../components/Profiles/RestaurantProfile.vue'
-import DeliveryProfile from '../components/Profiles/DeliveryProfile.vue'
-import AdminProfile from '../components/Profiles/AdminProfile.vue'
   
   export default {
     components: {
-      ClientProfile,
+      Profile,
       RestaurantProfile,
-      DeliveryProfile,
-      AdminProfile
     },
     data() {
-      return {
-      role: 'client', // Set the role to 'client' for testing
-      user: {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john.doe@example.com',
-        addresses: [
-          {
-            name: 'Maison',
-            address: '123 Rue de la Maison'
+  return {
+    role: 'restaurant', // Définissez le rôle sur 'client' pour les tests
+    user: {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+      addresses: [
+        {
+          name: 'Maison',
+          address: '123 Rue de la Maison'
+        },
+        {
+          name: 'Travail',
+          address: '456 Rue du Travail'
+        },
+        // Ajoutez autant d'adresses que nécessaire
+      ],
+      birthDate: '1990-01-01',
+      password: 'password123',
+      restaurants: [
+        {
+          name: 'pizzaland',
+          address: '10 Rue de la Gastronomie',
+          openingHours: {
+            "Lundi": "12:00 - 14:00, 17:00-22:00",
+            "Mardi": "11:00 - 13:00, 19:00-23:00",
+            // Ajoutez les autres jours de la semaine ici
           },
-          {
-            name: 'Travail',
-            address: '456 Rue du Travail'
+          ratingList: [1, 2, 5, 3, 2, 1, 5, 4],
+          products: [
+            {
+              id: 'product1',
+              name: 'Pizza Margherita',
+              description: 'Classic Italian pizza with tomatoes, mozzarella, and basil',
+              price: 12.99,
+              image: 'https://i.ibb.co/WgtZPHJ/unknown.png'
+            },
+            {
+              id: 'product2',
+              name: 'Spaghetti Bolognese',
+              description: 'Spaghetti with a hearty meat and tomato sauce',
+              price: 14.99,
+              image: 'https://i.ibb.co/WgtZPHJ/unknown.png'
+            }
+          ],
+          menus: [
+            {
+              name: 'Italian Classic',
+              productIds: ['product1', 'product2']
+            }
+          ]
+        },
+        {
+          name: 'pizzadelamama',
+          address: '20 Rue de la Pizza',
+          openingHours: {
+            "Lundi": "12:00 - 14:00, 17:00-22:00",
+            "Mardi": "11:00 - 13:00, 19:00-23:00"
+            // Ajoutez les autres jours de la semaine ici
           },
-          // Ajoutez autant d'adresses que nécessaire
-        ],
-        birthDate: '1990-01-01',
-        password: 'password123'
-      }
+          ratingList: [1, 3, 5, 4, 2, 1, 5, 3],
+          products: [
+            {
+              id: 'product3',
+              name: 'Lasagna',
+              description: 'Traditional Italian lasagna with bolognese sauce and cheese',
+              price: 15.99,
+              image: 'https://i.ibb.co/WgtZPHJ/unknown.png'
+            },
+            {
+              id: 'product4',
+              name: 'Tiramisu',
+              description: 'Delicious Italian dessert with coffee, mascarpone, and cocoa',
+              price: 7.99,
+              image: 'https://i.ibb.co/WgtZPHJ/unknown.png'
+            }
+          ],
+          menus: [
+            {
+              name: 'Italian Dessert',
+              productIds: ['product4']
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
 
-    }
-    }
+
+
+
   }
   </script>
 
 <style scoped>
 .round{
-    border-radius: 25;
+    border-radius: 25px;
+    padding-top: 50px;
 }
 </style>
+

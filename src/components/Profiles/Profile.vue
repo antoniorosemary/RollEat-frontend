@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card max-width="375" class="mx-auto">
+        <v-card max-width="375" class="mx-auto round">
             <v-img src="https://cdn.vuetifyjs.com/images/lists/ali.png" height="300px" dark>
                 <v-btn dark icon class="mr-4" style="position: absolute; top: 10px; right: 0;" @click="dialog = true">
                     <v-icon>mdi-pencil</v-icon>
@@ -132,13 +132,18 @@ import { Component, Prop, Vue, Watch, } from 'vue-property-decorator';
 import axios from 'axios';
 
 interface User {
-  // Définissez ici les propriétés de l'objet utilisateur
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
   dateOfBirth: string;
   password: string;
-  addresses: { name: string; address: string }[];
+  addresses: Address[];
+}
+
+interface Address {
+  name: string;
+  address: string;
 }
 
 @Component
@@ -187,6 +192,10 @@ export default class UserDialog extends Vue {
 .text-h4 {
   padding-left: 12px;
   padding-top: 12px;
+}
+
+.round{
+    border-radius: 25px;
 }
 
 </style>

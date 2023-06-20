@@ -1,13 +1,17 @@
-import ItemMenu from './ItemMenu'
+import Menu from './Menu'
 import Schedule from './Schedule'
+import Product from './Product'
 
 interface Restaurant{
     Image: string,
     Name: string,
-    Ville: string,
-    Note: number,
-    Horraires: Schedule,
-    Carte: Array<ItemMenu>,
+    City: string,
+    ZipCode: Number,
+    Adress: string,
+    Rating: Array<number>,
+    Schedule: Schedule,
+    Products: Array<Produit>,
+    Menus: Array<Menu>,
 }
 
 export default Restaurant

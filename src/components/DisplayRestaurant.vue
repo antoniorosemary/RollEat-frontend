@@ -2,7 +2,8 @@
   <div>
     <v-dialog
     v-model="Display"
-    max-width="1000">
+    max-width="1000"
+    >
       <v-card class="DisplayRestaurant">
         <v-container>
           <v-row>
@@ -24,7 +25,7 @@
                       class="mx-0"
                   >
                   <v-rating
-                      v-model="RestaurantToDetail.Note"
+                      v-model="RestaurantToDetail.Rating"
                       color="yellow"
                       size="Medium"
                       half-increments
@@ -32,7 +33,7 @@
                   ></v-rating>
                   
                       <div class="text-grey ms-4">
-                      {{RestaurantToDetail.Note}}
+                      {{RestaurantToDetail.Rating}}
                       </div>
                   </v-row>
                       
@@ -41,36 +42,36 @@
                   </v-card-title>
 
                   <v-card-subtitle>
-                      {{RestaurantToDetail.Ville}}
+                      {{RestaurantToDetail.City}}
                   </v-card-subtitle>
                   <table>
                     <tr>
                       <td>Lundi :</td>
-                      <td>{{RestaurantToDetail.Horraires.Monday}}</td>
+                      <td>{{RestaurantToDetail.Schedule.Monday}}</td>
                     </tr>
                     <tr>
                       <td>Mardi :</td>
-                      <td>{{RestaurantToDetail.Horraires.Tuesday}}</td>
+                      <td>{{RestaurantToDetail.Schedule.Tuesday}}</td>
                     </tr>
                     <tr>
                       <td>Mercredi :</td>
-                      <td>{{RestaurantToDetail.Horraires.Wednesday}}</td>
+                      <td>{{RestaurantToDetail.Schedule.Wednesday}}</td>
                     </tr>
                     <tr>
                       <td>Jeudi :</td>
-                      <td>{{RestaurantToDetail.Horraires.Thursday}}</td>
+                      <td>{{RestaurantToDetail.Schedule.Thursday}}</td>
                     </tr>
                     <tr>
                       <td>Vendredi :</td>
-                      <td>{{RestaurantToDetail.Horraires.Friday}}</td>
+                      <td>{{RestaurantToDetail.Schedule.Friday}}</td>
                     </tr>
                     <tr>
                       <td>Samedi :</td>
-                      <td>{{RestaurantToDetail.Horraires.Saturday}}</td>
+                      <td>{{RestaurantToDetail.Schedule.Saturday}}</td>
                     </tr>
                     <tr>
                       <td>Dimance :</td>
-                      <td>{{RestaurantToDetail.Horraires.Sunday}}</td>
+                      <td>{{RestaurantToDetail.Schedule.Sunday}}</td>
                     </tr>
                   </table>
                   </v-card-text>
@@ -89,7 +90,7 @@
                   </v-card-title>
                   
                   <v-list style="max-height: 500px; overflow-y: scroll;">
-                    <template v-for="Item in RestaurantToDetail.Carte">
+                    <template v-for="Item in RestaurantToDetail.Products">
                       <div class="d-flex justify-space-between">
                         <div>
                           <v-list-item-title class="ma-3">
@@ -106,7 +107,7 @@
                                 Ajouter
                               </v-btn>
                             </v-list-item-action>
-                            <bold class="font-weight-black">{{ Item.Prix }} €</bold>
+                            <bold class="font-weight-black">{{ Item.Price }} €</bold>
                           </v-list-item-text>
                           
                         </div>
@@ -134,7 +135,8 @@
       <v-row>
         <v-col 
         lg="auto" 
-        v-for="Restau in Restaurants" 
+        v-for="(Restau, Index) in Restaurants" 
+        :key="Index"
         v-on:click="ToggleDisplay(), TransfertRestaurant(Restau)"
         >
           <v-card
@@ -154,7 +156,7 @@
                 class="mx-0"
               >
               <v-rating
-                v-model="Restau.Note"
+                v-model="Restau.Rating"
                 color="yellow"
                 size="Medium"
                 half-increments
@@ -162,7 +164,7 @@
               ></v-rating>
               
                 <div class="text-grey ms-4">
-                  {{Restau.Note}}
+                  {{Restau.Rating}}
                 </div>
               </v-row>
                 
@@ -171,7 +173,7 @@
               </v-card-title>
 
               <v-card-subtitle>
-                {{Restau.Ville}}
+                {{Restau.City}}
               </v-card-subtitle>
             </v-card-text>
 
@@ -208,9 +210,11 @@ export default Vue.extend({
       RestaurantToDetail: {
         Image: "",
         Name: "Test",
-        Ville: "",
-        Note: 0,
-        Horraires: {
+        City: "",
+        ZipCode: 0,
+        Adress: "",
+        Rating: [],
+        Schedule: {
           Monday: "",
           Tuesday: "",
           Wednesday: "",
@@ -219,7 +223,8 @@ export default Vue.extend({
           Saturday: "",
           Sunday: "",
         },
-        Carte: [],
+        Products: [],
+        Menus: [],
       }
     };
   },

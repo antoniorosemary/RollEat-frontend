@@ -11,7 +11,7 @@ export default new Vuex.Store({
     userRole: "client",
 
     hrefHome: "/",
-    hrefAbout: "/about",
+    //hrefAbout: "/about",
     hrefProfile: "/profile",
     hrefLogin: "/login",
     hrefRegister: "/register",
@@ -19,9 +19,11 @@ export default new Vuex.Store({
     hrefCatalogue: "/catalogue",
     hrefStats: "/stats",
     hrefDelivery: "/delivery",
-    hrefContactUs: "/contactus",
-    hrefBecomeDelivery: "/becomedelivery",
-    hrefAboutUs: "/aboutus",
+
+    // Footer
+    hrefAboutUs: "/aboutUs",
+    hrefContactUs: "/contactUs",
+    hrefBecomeDelivery: "/becomeDelivery",
     hrefAddRestaurant: "/addRestaurant"
     
   },

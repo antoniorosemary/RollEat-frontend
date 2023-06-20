@@ -1,6 +1,8 @@
 # projetelective
 
-## Project setup
+## Commands
+
+### Project setup
 ```
 npm install
 ```
@@ -8,6 +10,8 @@ npm install
 ### Compiles and hot-reloads for development
 ```
 npm run serve
+OR
+npm run dev
 ```
 
 ### Compiles and minifies for production
@@ -18,7 +22,7 @@ npm run build
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-### Colors
+## Colors
 
 ```
 
@@ -69,3 +73,34 @@ $gradient-bottom-left: linear-gradient(315deg, #db995aff, #654236ff, #d6d4a0ff, 
 $gradient-radial: radial-gradient(#db995aff, #654236ff, #d6d4a0ff, #da7635ff, #e24e1bff);
 
 ```
+
+## Files in src
+- **assets**
+> Media files of the project
+- **components**
+> Components created for the pages
+  - *MassText*
+  > Component used to display multiples lines of text following vuetify's typorephy rules: https://v2.vuetifyjs.com/en/styles/text-and-typography/#typography
+- **router**
+    - *index*
+    > Manage the navigation between the pages
+- **store**
+    - *index*
+    > Manage the data store used accross the application
+- **types**
+> Custom Types used in multiple pages
+- **utils**
+> Utility function and classes used accros the application
+- **views**
+> Components corresponding to pages of the application
+  - **footer**
+    - *AboutUsView*
+    > About Us page Component
+    - *ContactUsView*
+    > Contact Us page Component
+    - *Join Delivery*
+    > Join Delivery page
+- *App*
+> Entry Component of the page
+- *main*
+> Entry Point of the application's javascript

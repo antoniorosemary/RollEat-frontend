@@ -8,12 +8,12 @@
       />
     </svg>
     <v-container class="ma-0 footer-body" style="max-width: 100%">
-      <v-row>
-        <v-col class="col-auto">
+      <v-row justify="space-between">
+        <v-col class="col-auto pl-0">
           <ResponsiveLogo/>
         </v-col>
-        <v-spacer/>
-        <v-col class="col-auto container mr-sm-10 mr-n16">
+        <!--v-spacer/-->
+        <v-col class="col-auto container mr-0">
           <v-row no-gutters>
             <v-col class="col-12 footer-link" sm="6">
               <router-link :to="hrefContactUs">
@@ -71,7 +71,7 @@ export default {
 .footer-body {
   background-color: #DA7635;
   color: white; 
-  height: 120px;
+  min-height: 120px;
 }
 
 .footer-link {

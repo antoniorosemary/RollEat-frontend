@@ -52,6 +52,7 @@ export default Vue.extend({
 
 .main {
   min-height: 100vh;
+  min-width: 100%;
 }
 
 </style>

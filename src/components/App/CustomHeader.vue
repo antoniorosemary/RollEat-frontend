@@ -6,9 +6,10 @@
     elevation="0"
     extension-height="0"
     height="64"
+    width="100vw"
   >
     <template v-slot:default>
-      <v-container class="ma-0" style="max-width: 100%">
+      <v-container class="ma-0 pa-0" style="max-width: 100%">
         <v-row justify="space-between" align="center">
           <v-col class="col-auto">
             <ResponsiveLogo/>

@@ -66,8 +66,8 @@
 </template>
   
 <script lang="ts">
-import ListItem from "../types/ListItem"
-import { mapState } from "vuex"
+import UserButtonListItem from '../types/UserButtonListItem';
+import { mapState } from 'vuex'
 import Vue from 'vue'
 
 interface UserButtonData {
@@ -77,25 +77,27 @@ interface UserButtonData {
 
 export default Vue.extend({
   components: {},
+
   data() : UserButtonData {return {
     expandMenu: false,
     selectedItem: -1,
   }},
-  computed: {
-    ...mapState([
-      'loggedOut',
-      'userName',
-      'userProfilePictureB64',
-      'userRole',
 
-      'hrefProfile',
-      'hrefCommands',
-      'hrefCatalogue',
-      'hrefStats',
-      'hrefDelivery',
-      'hrefLogin'
-    ]),
-    navOptions(): Array<ListItem> {
+  computed: {
+    ...mapState({
+      loggedOut: 'loggedOut',
+      userName: 'userName',
+      userProfilePictureB64: 'userProfilePictureB64',
+      userRole: 'userRole',
+
+      hrefProfile: 'hrefProfile',
+      hrefCommands: 'hrefCommands',
+      hrefCatalogue: 'hrefCatalogue',
+      hrefStats: 'hrefStats',
+      hrefDelivery: 'hrefDelivery',
+      hrefLogin: 'hrefLogin'
+    }),
+    navOptions(): Array<UserButtonListItem> {
       if(this.userRole === "client")
         return [
           {
@@ -136,6 +138,7 @@ export default Vue.extend({
       return this.B64ImgToSrc(this.userProfilePictureB64);
     }
   },
+  
   methods:{
     GoToLogin() {
       //this.loggedOut = !this.loggedOut;

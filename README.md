@@ -81,6 +81,8 @@ $gradient-radial: radial-gradient(#db995aff, #654236ff, #d6d4a0ff, #da7635ff, #e
 > Components created for the pages
   - *MassText*
   > Component used to display multiples lines of text following vuetify's typorephy rules: https://v2.vuetifyjs.com/en/styles/text-and-typography/#typography
+  - *UserButton*
+  > Component used to redirect to the login page when logged out and display navigation options to the client when logged in
 - **router**
     - *index*
     > Manage the navigation between the pages

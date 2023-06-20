@@ -9,6 +9,12 @@ import Client from '../components/Client.vue'
 import Restaurant from '../components/Restaurant.vue'
 import Register from '../components/Register.vue'
 
+// Footer Pages
+import AboutUsViewVue from '../views/footer/AboutUsView.vue'
+import ContactUsView from '../views/footer/ContactUsView.vue'
+import JoinDeliveryView from '../views/footer/JoinDeliveryView.vue'
+import AddRestaurantViewVue from '@/views/footer/AddRestaurantView.vue'
+
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
@@ -16,22 +22,11 @@ const routes: Array<RouteConfig> = [
     path: store.state.hrefHome,
     name: 'home',
     component: HomeView
-  },
-  {
-    path: store.state.hrefAbout,
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
+  },{
     path: '/test',
     name: 'test',
     component: () => import( '../views/TestView.vue')
-  },
-  {
+  },{
     path: store.state.hrefLogin,
     name: 'login',
     component: Login
@@ -63,6 +58,24 @@ const routes: Array<RouteConfig> = [
   //     }
   //   }
   // }
+  {
+    path: store.state.hrefAboutUs,
+    name: 'aboutUs',
+    component: AboutUsViewVue,
+    //meta: { requiresAuth: true }
+  },{
+    path:  store.state.hrefContactUs,
+    name: 'contactUs',
+    component: ContactUsView
+  },{
+    path:  store.state.hrefBecomeDelivery,
+    name: 'becomeDelivery',
+    component: JoinDeliveryView
+  },{
+    path:  store.state.hrefAddRestaurant,
+    name: 'addRestaurant',
+    component: AddRestaurantViewVue
+  }
 ]
 
 const router = new VueRouter({

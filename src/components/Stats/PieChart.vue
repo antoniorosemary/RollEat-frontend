@@ -1,22 +1,27 @@
 <template>
-  <v-skeleton-loader 
-    v-if="chartData===undefined" 
-    width="300" 
-    height="300"
-    class="skeleton"
-  />
-  <canvas v-else :id="chartId"/>
+  <SquareSkeletonLoaderVue 
+    :loading="chartData===undefined" 
+    width="300px" 
+    height="300px"
+  >
+    <canvas :id="chartId"/>
+  </SquareSkeletonLoaderVue>
+  
 </template>
 
 <script lang="ts">
 import { Chart, ChartData, ChartOptions } from 'chart.js';
 import Vue, { PropType } from 'vue'
+import SquareSkeletonLoaderVue from '../SquareSkeletonLoader.vue';
 
 interface Data {
   chart: Chart | undefined
 }
 
 export default Vue.extend({
+  components:{
+    SquareSkeletonLoaderVue
+  },
   data() : Data {
     return {
       chart: undefined
@@ -58,18 +63,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style>
-.skeleton {
-  animation: skeleton-loading 1s linear infinite alternate;
-}
-
-@keyframes skeleton-loading {
-  0% {
-    background-color: hsl(200, 20%, 80%);
-  }
-  100% {
-    background-color: hsl(200, 20%, 95%);
-  }
-}
-</style>

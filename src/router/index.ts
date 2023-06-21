@@ -9,6 +9,8 @@ import Client from '../components/Client.vue'
 import Restaurant from '../components/Restaurant.vue'
 import Register from '../views/RegisterView.vue'
 
+import RestaurantStats from '../views/RestaurantStatsView.vue'
+
 // Footer Pages
 import AboutUsViewVue from '../views/footer/AboutUsView.vue'
 import ContactUsView from '../views/footer/ContactUsView.vue'
@@ -35,7 +37,16 @@ const routes: Array<RouteConfig> = [
     path: store.state.hrefRegister,
     name: 'register',
     component: Register
-  },{
+  },
+
+  {
+    path: store.state.hrefRestaurantStats,
+    name: 'restaurantStats',
+    component: RestaurantStats
+  },
+  
+  // Footer pages
+  {
     path: store.state.hrefAboutUs,
     name: 'aboutUs',
     component: AboutUsViewVue

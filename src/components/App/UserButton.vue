@@ -93,7 +93,8 @@ export default Vue.extend({
       hrefProfile: 'hrefProfile',
       hrefCommands: 'hrefCommands',
       hrefCatalogue: 'hrefCatalogue',
-      hrefStats: 'hrefStats',
+      //hrefStats: 'hrefStats',
+      hrefRestaurantStats: 'hrefRestaurantStats',
       hrefDelivery: 'hrefDelivery',
       hrefLogin: 'hrefLogin'
     }),
@@ -119,7 +120,7 @@ export default Vue.extend({
           },{
             text: "Mes Statistiques",
             icon: "mdi-chart-bar",
-            href: this.hrefStats
+            href: this.hrefRestaurantStats
           }
         ]
         if(this.userRole === "delivery")

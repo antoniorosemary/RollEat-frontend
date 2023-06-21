@@ -19,6 +19,8 @@ export default new Vuex.Store({
     hrefStats: "/stats",
     hrefDelivery: "/delivery",
 
+    hrefRestaurantStats: "/restaurantStats",
+
     // Footer
     hrefAboutUs: "/aboutUs",
     hrefContactUs: "/contactUs",

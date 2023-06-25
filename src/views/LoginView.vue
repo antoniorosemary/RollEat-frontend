@@ -164,7 +164,6 @@ export default Vue.extend({
           // Traitez la réponse de l'API Gateway ici
           this.loginMessage = 'Connexion réussie!';
           let token = response.headers.authorization
-          console.log(response.headers);
           localStorage.setItem('token', token); // Enregistrement du token dans le local storage
           //this.$store.state.userToken = token; // Enregistrement du token dans le store 
           this.$router.push('/restaurant'); // Redirection vers la page d'accueil

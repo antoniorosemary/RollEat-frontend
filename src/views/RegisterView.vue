@@ -461,8 +461,7 @@ export default Vue.extend({
       axios.post(endpoint_register, formDataUser, {withCredentials: true})
         .then(response => {
           console.log(response.data);
-          let token = response.headers['Authorization'];
-          console.log(token);
+          let token = response.headers.authorization
           localStorage.setItem('token', token); // Enregistrement du token dans le local storage
           //this.$store.state.userToken = token; // Enregistrement du token dans le store 
           axios.post('/address/add', formDataAddress, {withCredentials: true})

@@ -12,7 +12,7 @@
 <script lang="ts">
 import { Chart, ChartData, ChartOptions } from 'chart.js';
 import Vue, { PropType } from 'vue'
-import SquareSkeletonLoaderVue from '../SquareSkeletonLoader.vue';
+import SquareSkeletonLoaderVue from '../RectangleSkeletonLoader.vue';
 
 interface Data {
   chart: Chart | undefined

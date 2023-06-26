@@ -1,6 +1,15 @@
 <template>
   <v-container>
     <v-row>
+      <v-col class="col-12" sm="auto">
+        <v-card :width="$vuetify.breakpoint.sm ? 300 : ''">
+          <DialogDatePicker
+            fullClass="d-none d-sm-flex"
+            dialogClass="d-flex d-sm-none"
+          />
+        </v-card>
+      </v-col>
+      
       <v-col class="col-auto">
         <v-card>
           <PieChart 
@@ -8,7 +17,6 @@
             v-bind:chartData="pieDriveDeliveryRatioData"
             :chartOptions="pieDriveDeliveryRatioOptions"
           />
-          <v-btn @click="test">test</v-btn>
         </v-card>
       </v-col>
     </v-row>
@@ -18,6 +26,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import PieChart from '../components/Stats/PieChart.vue'
+import DialogDatePicker from '../components/DialogDatePicker.vue'
 import {ChartData, ChartOptions } from 'chart.js'
 import Colors from '../utils/colors'
 
@@ -27,7 +36,8 @@ interface Data {
 }
 export default Vue.extend({
   components:{
-    PieChart
+    PieChart,
+    DialogDatePicker
   },
   data() : Data {
     return {

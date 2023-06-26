@@ -81,28 +81,70 @@ $gradient-radial: radial-gradient(#db995aff, #654236ff, #d6d4a0ff, #da7635ff, #e
 - **components**
 > Components created for the pages
   - **App**
-    - *CustomFooter*
+    - ***CustomFooter***
     > Component used to render the footer
-    - *CustomHeader*
+    - ***CustomHeader***
     > Component used to render the header
-    - *ResponsiveLogo*
+    - ***ResponsiveLogo***
     > Component used to render the logo responsively
-    - *UserButton*
+    - ***UserButton***
     > Component used to redirect to the login page when logged out and display navigation options to the client when logged in
 
-  - *MassText*
+  - **Stats**
+    - ***PieChart***
+    > Component used to display a PieChart using Chart.js, has to asigned data and options accordingly to chart js Pie charts and a chartID unique to it
+
+  - ***DialogDatePicker***
+  > Component used to let the user select a range of dates.
+  > Has 4 props : 
+  > - *fullClass* :
+  >   Classes applied to the date picker when fully shown
+  >   type : string
+  >   default : "d-none d-lg-flex"
+  > - *dialogClass* :
+  >   Classes applied to the text field when in dialog
+  >   type : string
+  >   default : "d-flex d-lg-none"
+  > - *allowedDates* :
+  >   Function used to allow dates to be selected
+  >   type : (string) => boolean
+  >   default : (val) => true
+  > - *defaultDates*:
+  >   Dates already selected on loading
+  >   type : string
+  >   default : Date of the day
+
+  - ***MassText***
   > Component used to display multiples lines of text following vuetify's typorephy rules: https://v2.vuetifyjs.com/en/styles/text-and-typography/#typography
   
+  - ***RectangleSkeletonLoader***
+  > Component used to display a rectangle loader with customisable size.
+  > Has 3 props :
+  > - *heigth* :
+  >   type : dtring
+  >   default : "100px"
+  > - *width* :
+  >   type : dtring
+  >   default : "200px"
+  > - *loading* :
+  >   whether the loader should be shown or not
+  >   type : boolean
+  >   default : true
+  > Has 1 slot :
+  > - *default* :
+  >   content shown once loaded
+  
+  
 - **plugins**
-  - *vuetify*
+  - ***vuetify***
   > Setup for vuetify and personnalized style for vuetify
 
 - **router**
-  - *index*
+  - ***index***
   > Manage the navigation between the pages
 
 - **store**
-  - *index*
+  - ***index***
   > Manage the data store used accross the application
 
 - **types**
@@ -114,23 +156,23 @@ $gradient-radial: radial-gradient(#db995aff, #654236ff, #d6d4a0ff, #da7635ff, #e
 - **views**
 > Components corresponding to pages of the application
   - **footer**
-    - *AboutUsView*
+    - ***AboutUsView***
     > About Us page's Component
-    - *ContactUsView*
+    - ***ContactUsView***
     > Contact Us page's Component
-    - *Join Delivery*
+    - ***Join Delivery***
     > Join Delivery page's Component
 
-  - *HomeView*
+  - ***HomeView***
   > Default page's Component
-  - *LoginView*
+  - ***LoginView***
   > Login page's Component
-  - *Register*
+  - ***Register***
   > Register page's Component
 
-- *App*
+- ***App***
 > Entry Component of the page
-- *main*
+- ***main***
 > Entry Point of the application's javascript
-- *axiosDefaultCoonfig*
+- ***axiosDefaultCoonfig***
 > Default config for axios requests

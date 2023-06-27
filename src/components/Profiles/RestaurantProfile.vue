@@ -69,7 +69,7 @@
                           <v-expansion-panel v-for="(menu, j) in restaurant.menus" :key="j">
                               <v-expansion-panel-header>
                                   {{ menu.name }}
-                                  <v-btn color="blue darken-1" text @click.stop="editCategory(i, j)">Modifier</v-btn>
+                                  <v-btn color="blue darken-1" text @click.stop="editCategory(i, j, menu)">Modifier</v-btn>
                               </v-expansion-panel-header>
                               <v-expansion-panel-content>
                                   <v-list>
@@ -94,7 +94,7 @@
                                   </v-list>
                               </v-expansion-panel-content>
                           </v-expansion-panel>
-                          <v-btn color="green darken-1" text @click.stop="createNewMenu(restaurant)">Nouveau menu</v-btn>
+                          <v-btn color="green darken-1" text @click.stop="createNewMenu(restaurant.name)">Nouveau menu</v-btn>
                       </v-expansion-panel-content>
                   </v-expansion-panel>
                   <!-- end-menus -->
@@ -195,9 +195,10 @@
             <v-row>
                 <v-col cols="12">
                     <v-list>
-                    <!-- <v-list-item>
-                        <v-text-field v-model="editedBlock?.name"></v-text-field>
-                    </v-list-item> -->
+                    <v-list-item>
+                        <v-text-field v-model="editedBlock.name"></v-text-field>
+                        <v-btn color="blue" @click="addCategory()">modifier le nom du menu</v-btn>
+                    </v-list-item> 
                     <v-list-item v-for="(category, k) in editedMenu?.products || []" :key="k">
                         <v-text-field v-model="category.name"></v-text-field>
                         <v-btn color="red" @click="deleteCategory(k)">Supprimer</v-btn>
@@ -491,7 +492,7 @@ export default class RestaurantProfile extends Vue {
     this.categoryDialog = true; 
   }
 
-  createNewMenu() {
+  createNewMenu(restaurantName: string) {
     const newMenu = {
       "idmenu": this.user.restaurants[0].menus.length + 1, // ceci est un exemple, vous devrez peut-être générer l'ID d'une manière différente
       "name": "menu",
@@ -511,7 +512,12 @@ export default class RestaurantProfile extends Vue {
       "price": 0
     };
 
-    this.user.restaurants[0].menus.push(newMenu); // Ajoute le nouveau menu à la liste des menus
+    const restaurant = this.user.restaurants.find(r => r.name === restaurantName);
+    if (restaurant) {
+      restaurant.menus.push(newMenu); // Ajoute le nouveau menu à la liste des menus du restaurant
+    } else {
+      console.error(`Restaurant ${restaurantName} not found`);
+    }
   }
 
   saveMenuChanges() {
@@ -544,12 +550,10 @@ export default class RestaurantProfile extends Vue {
     this.categoryDialog = false;
   }
 
-
-
-
   //category
-  editCategory(i: number, j: number) {
+  editCategory(i: number, j: number, menu: Menu) {
     this.editedIndices = [i, j];
+    this.editedBlock = menu;
     // Deep copy of the menu to edit
     this.editedMenu = JSON.parse(JSON.stringify(this.user.restaurants[i].menus[j]));
     // this.editedBlock = this.user.restaurants[i].menus[j];

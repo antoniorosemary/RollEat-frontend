@@ -12,7 +12,7 @@
                     <v-spacer></v-spacer>
                     <v-card-title class="white--text pl-12 pt-12">
                         <div class="text-h4 pl-12 pt-12">
-                            {{ user.firstName }} {{ user.lastName }}
+                            {{ user.Prenom }} {{ user.Nom }}
                         </div>
                     </v-card-title>
                 </v-row>
@@ -27,7 +27,7 @@
             </v-list-item-icon>
     
             <v-list-item-content>
-                <v-list-item-title>{{ user.email }}</v-list-item-title>
+                <v-list-item-title>{{ user.Email }}</v-list-item-title>
                 <v-list-item-subtitle>Email</v-list-item-subtitle>
             </v-list-item-content>
             </v-list-item>
@@ -42,7 +42,7 @@
             </v-list-item-icon>
     
             <v-list-item-content>
-                <v-list-item-title>{{ user.dateOfBirth }}</v-list-item-title>
+                <v-list-item-title>{{ user.DateNaissance }}</v-list-item-title>
                 <v-list-item-subtitle>Date de naissance</v-list-item-subtitle>
             </v-list-item-content>
             </v-list-item>
@@ -66,19 +66,19 @@
     
 
             <!-- Adresses -->
-            <v-list-item v-for="(address, index) in user.addresses" :key="index">
-            <v-list-item-icon>
-                <v-icon color="indigo">
-                mdi-map-marker
-                </v-icon>
-            </v-list-item-icon>
+            <v-list-item v-for="(address, index) in user.Adresses" :key="index">
+                <v-list-item-icon>
+                    <v-icon color="indigo">
+                        mdi-map-marker
+                    </v-icon>
+                </v-list-item-icon>
 
-            <v-list-item-content>
-                <v-list-item-title>{{ address.address }}</v-list-item-title>
-                <v-list-item-subtitle>{{ address.name }}</v-list-item-subtitle>
-            </v-list-item-content>
-
+                <v-list-item-content>
+                    <v-list-item-title>{{ address.Adresse }}</v-list-item-title>
+                    <v-list-item-subtitle>{{ address.NomAdresse }}</v-list-item-subtitle>
+                </v-list-item-content>
             </v-list-item>
+
         </v-list>
         </v-card>
         
@@ -92,24 +92,23 @@
             <v-container>
                 <v-row>
                 <v-col cols="12">
-                    <v-text-field v-model="editedUser.firstName" label="Prénom"></v-text-field>
+                    <v-text-field v-model="editedUser.Prenom" label="Prénom"></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                    <v-text-field v-model="editedUser.lastName" label="Nom"></v-text-field>
+                    <v-text-field v-model="editedUser.Nom" label="Nom"></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                    <v-text-field v-model="editedUser.email" label="Email"></v-text-field>
+                    <v-text-field v-model="editedUser.Email" label="Email"></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                    <v-text-field v-model="editedUser.dateOfBirth" label="Date de Naissance"></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-text-field v-model="editedUser.password" label="Password"></v-text-field>
+                    <v-text-field v-model="editedUser.DateNaissance" label="Date de Naissance"></v-text-field>
                 </v-col>
                 <!-- Adresses -->
-                <v-col cols="12" v-for="(address, index) in editedUser.addresses" :key="index">
-                    <v-text-field v-model="address.name" :label="`Nom de l'adresse ${index + 1}`"></v-text-field>
-                    <v-text-field v-model="address.address" :label="`Adresse ${index + 1}`"></v-text-field>
+                <v-col cols="12" v-for="(address, index) in editedUser.Adresses" :key="index">
+                    <v-text-field v-model="address.NomAdresse" :label="`Nom de l'adresse ${index + 1}`"></v-text-field>
+                    <v-text-field v-model="address.Adresse" :label="`Adresse ${index + 1}`"></v-text-field>
+                    <v-text-field v-model="address.Ville" :label="`Ville de l'adresse ${index + 1}`"></v-text-field>
+                    <v-text-field v-model="address.CodePostal" :label="`Code Postal de l'adresse ${index + 1}`"></v-text-field>
                 </v-col>
                 <!-- Ajoutez d'autres champs de formulaire ici pour les autres propriétés de l'utilisateur -->
                 </v-row>
@@ -132,19 +131,41 @@ import { Component, Prop, Vue, Watch, } from 'vue-property-decorator';
 import axios from 'axios';
 
 interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  dateOfBirth: string;
-  password: string;
-  addresses: Address[];
+    IdUtilisateur: number;
+    Prenom: string;
+    Nom: string;
+    Email: string;
+    DateNaissance: string;
+    PasswordHash: string;
+    Addresses: Address[];
 }
 
+// {
+//     "IdUtilisateur": 84,
+//     "Nom": "Moreau",
+//     "Prenom": "Alex",
+//     "Telephone": "123123123",
+//     "CodeParrainage": "1231551",
+//     "CodeParrain": null,
+//     "Email": "alexandre.moreau2001@gmail.com",
+//     "PasswordHash": "$2b$10$OE8L0IHvgUGpYhnDrc9.he1rdp6nfcMcH3am4y1Jv6uh2xXc5r8TG",
+//     "DateNaissance": "2023-06-27T00:00:00.000Z",
+//     "AutoriseNotifications": 1,
+//     "Notations": 0,
+//     "EtatDuCompte": "Ouvert",
+//     "IdRole": 4,
+//     "NomRole": "Restaurateur"
+// }
+
 interface Address {
-  name: string;
-  address: string;
+    NomAdresse: string;
+    Adresse: string;
+    Pays: string;
+    Ville: string;
+    CodePostal: string;
+    IdUtilisateur: number;
 }
+
 
 @Component
 export default class UserDialog extends Vue {
@@ -152,12 +173,14 @@ export default class UserDialog extends Vue {
   private editedUser: User | null = null;
 
   @Prop({ required: true, type: Object })
-  private user!: User;
+  public user!: User;
 
   @Watch('user', { immediate: true, deep: true })
   onUserChanged(newValue: User) {
     this.editedUser = { ...newValue };
   }
+
+  
 
   async saveChanges() {
     if (this.editedUser) {

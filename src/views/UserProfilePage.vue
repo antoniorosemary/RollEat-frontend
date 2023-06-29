@@ -1,7 +1,7 @@
 <template>
   <div><br>
 
-    <v-row v-if="role != 'restaurant'">
+    <v-row v-if="role != 'restaurant' && user">
       <v-col cols="10" offset="2">
         <Profile :user="user" style="width: 80%;"/>
       </v-col>
@@ -9,7 +9,7 @@
 
 
 
-    <v-row v-if="role === 'restaurant'">
+    <v-row v-if="role === 'restaurant' && user">
       <v-col lg="4" offset="1">
         <Profile :user="user" />
       </v-col>
@@ -22,6 +22,78 @@
 
   
 <script lang="ts">
+import Profile from '../components/Profiles/Profile.vue'
+import RestaurantProfile from '../components/Profiles/RestaurantProfile.vue'
+import axios from 'axios';
+
+export default {
+  components: {
+    Profile,
+    RestaurantProfile,
+  },
+  data() {
+    return {
+      role: 'restaurant',
+      user: null,
+    }
+  },
+  methods: {
+    transformKeysToLower(obj: any) :any {
+      if (Array.isArray(obj)) {
+        return obj.map(this.transformKeysToLower);
+      } else if (typeof obj === 'object' && obj !== null) {
+        return Object.keys(obj).reduce((newObj, key) => {
+          newObj[key.toLowerCase()] = this.transformKeysToLower(obj[key]);
+          return newObj;
+        }, {});
+      }
+      return obj;
+    },
+    async fetchUserData() {
+      try {
+        const userPromise = axios.get('/profile');
+        const restaurantsPromise = axios.get('/restaurants/owner/full');
+        const adressPromise = axios.get('/address/all');
+
+        const [userResponse, restaurantsResponse, adressResponse] = await Promise.all([userPromise, restaurantsPromise, adressPromise]);
+
+        // Make sure to validate the responses before using the data.
+        if (userResponse.data && restaurantsResponse.data && adressResponse.data) {
+          const user = userResponse.data.user;
+          let restaurants = restaurantsResponse.data;
+          let adress = adressResponse.data.address;
+
+          // Convert keys to lower case
+          restaurants = restaurants.map(this.transformKeysToLower);
+
+          console.log(restaurants);
+          console.log(adress);
+
+          // Add the restaurants data to the user object
+          user.restaurants = restaurants;
+          user.Adresses = adress;
+
+          return user;
+        }
+
+        throw new Error('Invalid responses');
+
+      } catch (error) {
+        console.error(error);
+        //this.$router.push('/feed');
+      }
+    },
+  },
+  async created() {
+    this.user = await this.fetchUserData();
+    console.log(this.user);
+  }
+}
+</script>
+
+
+
+<!-- <script lang="ts">
 import Profile from '../components/Profiles/Profile.vue'
 import RestaurantProfile from '../components/Profiles/RestaurantProfile.vue'
   
@@ -247,4 +319,4 @@ import RestaurantProfile from '../components/Profiles/RestaurantProfile.vue'
 
 }
 </script>
-
+ -->

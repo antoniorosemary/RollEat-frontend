@@ -6,7 +6,7 @@
       contain
       max-height="64"
       max-width="128"
-      src="../assets/Logo outlined 128x64.png"
+      src="../../assets/Logo outlined 128x64.png"
     />
     <v-img
       alt="Roll Eat Logo"
@@ -14,7 +14,7 @@
       contain
       max-height="64"
       max-width="64"
-      src="../assets/Logo outlined 64x64.png"
+      src="../../assets/Logo outlined 64x64.png"
     />
   </div>
 </template>

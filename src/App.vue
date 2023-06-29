@@ -2,7 +2,7 @@
   <v-app>
     <CustomHeader/>
 
-    <v-main>
+    <v-main class="main">
       <router-view class="body"/>
     </v-main>
 
@@ -46,9 +46,13 @@ export default Vue.extend({
   justify-content: center;
   min-height: 100vh;*/
   padding-top: 60px;
+  
  /* padding:32px;*/
 }
 
-
+.main {
+  min-height: 100vh;
+  min-width: 100%;
+}
 
 </style>

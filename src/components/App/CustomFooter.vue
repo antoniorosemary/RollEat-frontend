@@ -7,27 +7,39 @@
         d="M 0 25 Q 360 -25 720 25 Q 1080 75 1440 25 L 1440 55 L 0 55 L 0 55"
       />
     </svg>
+
     <v-container class="ma-0 footer-body" style="max-width: 100%">
-      <v-row>
-        <v-col class="col-auto">
+      <v-row justify="space-between">
+        <v-col class="col-auto pl-0">
           <ResponsiveLogo/>
         </v-col>
-        <v-spacer/>
-        <v-col class="col-auto container mr-sm-10 mr-n16">
+        
+        <v-col class="col-auto container mr-0">
           <v-row no-gutters>
             <v-col class="col-12 footer-link" sm="6">
-              <a>Nous contacter</a>
+              <router-link :to="hrefContactUs">
+                <a>Nous contacter</a>
+              </router-link>
             </v-col>
+
             <v-col class="col-12 footer-link" sm="6">
-              <a>Devenir Livreur</a>
+              <router-link :to="hrefBecomeDelivery">
+                <a>Devenir Livreur</a>
+              </router-link>
             </v-col>
           </v-row>
+
           <v-row no-gutters>
             <v-col class="col-12 footer-link" sm="6">
-              <a>A propos de Roll Eat</a>
+              <router-link :to="hrefAboutUs">
+                <a>A propos de Roll Eat</a>
+              </router-link>
             </v-col>
+
             <v-col class="col-12 footer-link" sm="6">
-              <a>Ajouter votre restaurant</a>
+              <router-link :to="hrefAddRestaurant">
+                <a>Ajouter votre restaurant</a>
+              </router-link>
             </v-col>
           </v-row>
         </v-col>
@@ -37,10 +49,20 @@
 </template>
   
 <script lang="ts">
-import ResponsiveLogo from '../ResponsiveLogo.vue';
+import ResponsiveLogo from './ResponsiveLogo.vue';
+import { mapState } from 'vuex';
+
 export default {
   components: {
     ResponsiveLogo
+  },
+  computed: {
+    ...mapState([
+      'hrefContactUs',
+      'hrefBecomeDelivery',
+      'hrefAboutUs',
+      'hrefAddRestaurant'
+    ])
   }
 }
 </script>
@@ -53,7 +75,7 @@ export default {
 .footer-body {
   background-color: #DA7635;
   color: white; 
-  height: 120px;
+  min-height: 120px;
 }
 
 .footer-link {
